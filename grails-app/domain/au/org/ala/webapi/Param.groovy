@@ -2,7 +2,6 @@ package au.org.ala.webapi
 
 class Param {
 
-    WebService webService
     String name
     String description
     String type = 'String'
@@ -15,6 +14,8 @@ class Param {
     String toString(){
         return name + ": " + type
     }
+
+    static belongsTo = [webService:WebService]
 
     static paramTypes = ['String','Integer','Date', 'Double']
 

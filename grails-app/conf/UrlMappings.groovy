@@ -2,7 +2,10 @@ class UrlMappings {
 
 	static mappings = {
 
-		"/"(controller:'webserviceList', action: "index")
+		"/"(controller:'webserviceList', action: "byCategory")
+		"/categories"(controller:'webserviceList', action: "byCategory")
+		"/apps"(controller:'webserviceList', action: "byApp")
+		"/apps/$name"(controller:'webserviceList', action: "bySpecificApp")
 
 		"/$controller/$action?/$id?"{
 			constraints {

@@ -2,7 +2,6 @@ package au.org.ala.webapi
 
 class WebService {
 
-    App app
     String name
     String description = "To be added..."
     String url = "" // excluding the baseUrl
@@ -12,6 +11,8 @@ class WebService {
 
     Date dateCreated
     Date lastUpdated
+
+    static belongsTo = [app:App]
 
     String toString(){
         return name
@@ -68,5 +69,6 @@ class WebService {
 
     static mapping = {
       description type: 'text'
+      params cascade: "all-delete-orphan"
     }
 }

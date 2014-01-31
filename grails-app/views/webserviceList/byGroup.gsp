@@ -72,10 +72,11 @@
                     <b class="caret"></b>
                   </a>
                 <ul class="dropdown-menu">
-                <li><g:link controller="app">Apps</g:link></li>
-                <li><g:link controller="webService">Webservices</g:link></li>
-                <li><g:link controller="category">Categories</g:link></li>
-                <li><g:link controller="example">Examples</g:link></li>
+                    <li><g:link controller="webService" action="create">Add Webservice</g:link></li>
+                    <li><g:link controller="app">Apps</g:link></li>
+                    <li><g:link controller="webService">Webservices</g:link></li>
+                    <li><g:link controller="category">Categories</g:link></li>
+                    <li><g:link controller="example">Examples</g:link></li>
                 </ul>
               </li>
             </ul>
@@ -83,27 +84,28 @@
 
 		<div  role="main">
 			<h1>Web service API</h1>
-            <p>
-                This is a full listing of the webservices for the ALA.
+            <p class="lead">
+                The (nearly) complete listing of the web services for the ALA. Send complements/issues to support@ala.org.au.
             </p>
 
-            <g:each in="${wsByCategory.keySet()}" var="category">
+            <g:each in="${wsByGroup.keySet()}" var="group">
 
-                <g:if test="${wsByCategory[category]}">
-                <h2 class="categoryHdr">${category.name} <span><small> - ${category.description}</small></span></h2>
+                <g:if test="${wsByGroup[group]}">
+                <h2 class="categoryHdr">${group.name} <span><small> - ${group.description}</small></span></h2>
                 <ul style="list-style: none; margin:0;">
-                <g:each in="${wsByCategory[category]}" var="webService">
+                <g:each in="${wsByGroup[group]}" var="webService">
                     <li id="webService-${webService.id}" class="webService">
                         <h4>
-                            <span class="httpMethod-${webService.httpMethod}">${webService.httpMethod}</span>
-                            <span class="outputFormat">${webService.outputFormat}</span>
-                            <span class="webserviceName">${webService.name}</span>
+                            <span class="httpMethod-${webService.httpMethod} webServiceShowDetails">${webService.httpMethod}</span>
+                            <span class="outputFormat webServiceShowDetails">${webService.outputFormat}</span>
+                            <span class="webserviceName webServiceShowDetails">${webService.name}</span>
                             -
-                            <span class="webserviceUrl">${webService.getQueryUrl()}</span>
+                            <span class="webserviceUrl webServiceShowDetails">${webService.getQueryUrl()}</span>
 
                            <span class="pull-right" style="padding-right:10px;">
+                               %{--<a href="javascript:void(0);" class=" webServiceShowDetails btn btn-small">Show details</a>--}%
                                <g:link controller="webService" action="edit" id="${webService.id}" class="btn btn-small">Edit</g:link>
-                               <g:link controller="webService" action="edit" id="${webService.id}" class="btn btn-small">Add Example</g:link>
+                               <g:link controller="example" action="createForWS" params="[id:webService.id]" class="btn btn-small">Add example</g:link>
                            </span>
                         </h4>
 
@@ -135,6 +137,10 @@
                                     <ul>
                                     <g:each in="${webService.examples}" var="example">
                                        <li>
+                                           <span class="pull-right" style="padding-right:10px;">
+                                               <g:link controller="example" action="edit" id="${example.id}" class="btn btn-small">Edit</g:link>
+                                           </span>
+
                                            <h5>${example.name}</h5>
                                            <p><markdown:renderHtml>${example.description}</markdown:renderHtml></p>
                                            <p>
@@ -157,8 +163,8 @@
 
 $(function() {
     //add click events for links
-    $( ".webService" ).click(function() {
-      $( this).children( ".webServiceDetails" ).toggle( "slow", function() {
+    $( ".webServiceShowDetails" ).click(function() {
+      $( this).parent().parent().children( ".webServiceDetails" ).toggle( "slow", function() {
         // Animation complete.
       });
     });

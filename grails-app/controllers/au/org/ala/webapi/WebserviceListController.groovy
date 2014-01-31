@@ -2,7 +2,7 @@ package au.org.ala.webapi
 
 class WebserviceListController {
 
-    def index() {
+    def byCategory() {
 
       def categories = au.org.ala.webapi.Category.list()
 
@@ -13,6 +13,32 @@ class WebserviceListController {
           wsByCategory[category] = webservices
       }
 
-      [wsByCategory: wsByCategory]
+      //[wsByCategory: wsByCategory]
+      render(view: "byGroup", model: [wsByGroup: wsByCategory])
+    }
+
+    def byApp() {
+
+      def apps = au.org.ala.webapi.App.list()
+
+      def wsByApp = [:]
+
+      apps.each { app ->
+          wsByApp[app] = app.webservices
+      }
+
+//      [wsByApp: wsByApp]
+      render(view: "byGroup", model: [wsByGroup: wsByApp])
+    }
+
+    def bySpecificApp() {
+
+      def app = App.findByName(params.name)
+
+      def wsByApp = [:]
+
+      wsByApp[app] = app.webservices
+
+      render(view: "byGroup", model: [wsByGroup: wsByApp])
     }
 }

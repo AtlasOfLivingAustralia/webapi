@@ -2,11 +2,12 @@ package au.org.ala.webapi
 
 class ExampleParam {
 
-    Example example
     Param param
-    String value
+    String value = ""
     Date dateCreated
     Date lastUpdated
+
+    static belongsTo = [example:Example]
 
     String toString(){
        param.name + "=" + value

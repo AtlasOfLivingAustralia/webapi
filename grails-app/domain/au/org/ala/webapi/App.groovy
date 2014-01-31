@@ -8,6 +8,8 @@ class App {
     Date dateCreated
     Date lastUpdated
 
+    static hasMany = [webservices:WebService]
+
     String toString(){
         return name
     }

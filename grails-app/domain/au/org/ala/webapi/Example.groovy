@@ -10,7 +10,6 @@ class Example {
 
     static hasMany = [params:ExampleParam]
 
-
     def getQueryUrl(){
 
         def paramString = ""
@@ -41,5 +40,6 @@ class Example {
 
     static mapping = {
       description type: 'text'
+      params cascade: "all-delete-orphan"
     }
 }
