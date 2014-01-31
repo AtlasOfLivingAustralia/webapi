@@ -6,6 +6,7 @@ class Param {
     String description
     String type = 'String'
     Boolean mandatory = false
+    Boolean deprecated = false
     Boolean includeInTitle = false
     String format = ''  // for dates eg. yyyy-mm-dd
     Date dateCreated
@@ -14,6 +15,8 @@ class Param {
     String toString(){
         return name + ": " + type
     }
+
+    static hasMany = [exampleParams:ExampleParam]
 
     static belongsTo = [webService:WebService]
 
@@ -29,5 +32,6 @@ class Param {
 
     static mapping = {
       description type: 'text'
+      exampleParams cascade: "all-delete-orphan"
     }
 }

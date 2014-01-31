@@ -7,7 +7,7 @@ class ExampleParam {
     Date dateCreated
     Date lastUpdated
 
-    static belongsTo = [example:Example]
+    static belongsTo = [example:Example, param:Param]
 
     String toString(){
        param.name + "=" + value

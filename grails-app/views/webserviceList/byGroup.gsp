@@ -116,12 +116,15 @@
                                 <table class="table table-bordered table-striped  table-condensed">
                                 <g:each in="${webService.getSortedParams()}" var="param">
                                    <tr>
-                                       <td>${param.name}</td>
+                                       <td>${param.name}
+                                        <g:if test="${param.mandatory}"><span class="required-indicator">*</span></g:if>
+                                        <g:if test="${param.deprecated}"><span class="required-indicator">(deprecated)</span></g:if>
+                                       </td>
                                        <td>${param.type}</td>
                                        <td>
-                                           <span class="pull-right">
-                                               <g:link controller="param" action="edit" id="${param.id}" class="btn btn-small">Edit</g:link>
-                                           </span>
+                                           %{--<span class="pull-right">--}%
+                                               %{--<g:link controller="param" action="edit" id="${param.id}" class="btn btn-small">Edit</g:link>--}%
+                                           %{--</span>--}%
                                            <span class="paramDescription">
                                            <markdown:renderHtml>${param.description}</markdown:renderHtml>
                                            </span>

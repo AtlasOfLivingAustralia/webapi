@@ -97,10 +97,56 @@ class WebServiceController {
             return
         }
 
-        webServiceInstance.params.clear()
+        //reconcile params
+
+        //save the parameters
+        def paramIds = params.list('paramId')
+        def paramNames = params.list('paramName')
+        def paramTypes = params.list('paramType')
+        def paramMandatorys = params.list('_paramMandatory')
+        def paramDeprecateds = params.list('_paramDeprecated')
+        def paramDescriptions = params.list('paramDescription')
+
+        //existing params for this service
+        def currentParamIds = webServiceInstance.params.collect { it.id }
+
+        def restoredParamIds = []
+
+        paramNames.eachWithIndex { paramName, i ->
+            def paramId = paramIds[i]
+            def paramType = paramTypes[i]
+            def paramMandatory = Boolean.parseBoolean(paramMandatorys[i])
+            def paramDeprecated = Boolean.parseBoolean(paramDeprecateds[i])
+            def paramDescription = paramDescriptions[i]
+
+            if(paramId){
+                restoredParamIds << Long.parseLong(paramId)
+                Param p = Param.findById(paramId)
+                p.mandatory = paramMandatory
+                p.name = paramName
+                p.deprecated = paramDeprecated
+                p.type = paramType
+                p.description = paramDescription
+                p.save(flush:true)
+            } else {
+                Param p = new Param([webService: webServiceInstance, name: paramName,
+                        type: paramType, mandatory: paramMandatory, deprecated:paramDeprecated, description: paramDescription])
+                p.save(flush: true)
+                webServiceInstance.params << p
+            }
+        }
+
+        currentParamIds.removeAll(restoredParamIds)
+
+        currentParamIds.each {
+            def paramToGo = Param.findById(it)
+            webServiceInstance.removeFromParams(paramToGo)
+            paramToGo.delete(flush:true)
+        }
+
         webServiceInstance.save(flush:true)
 
-        storeParams(webServiceInstance, params)
+         //add new
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'webService.label', default: 'WebService'), webServiceInstance.id])
         redirect(action: "show", id: webServiceInstance.id)
