@@ -4,19 +4,19 @@ import au.org.ala.webapi.WebService
 
 class BootStrap {
 
-    def addCategory(name, description){
+    def addCategory(name, shortDescription){
         def category = au.org.ala.webapi.Category.findByName(name)
         if(!category){
-            category = new au.org.ala.webapi.Category([name:name, description:description])
+            category = new au.org.ala.webapi.Category([name:name, shortDescription:shortDescription])
             category.save(flush:true)
         }
         category
     }
 
-    def addApp(name, description, baseUrl){
+    def addApp(name, shortDescription, baseUrl){
         def app =  au.org.ala.webapi.App.findByName(name)
         if(!app){
-            app = new au.org.ala.webapi.App([name:name, description:description, baseUrl:baseUrl])
+            app = new au.org.ala.webapi.App([name:name, shortDescription:shortDescription, baseUrl:baseUrl])
             app.save(flush:true)
         }
         app

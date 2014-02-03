@@ -2,6 +2,8 @@ package au.org.ala.webapi
 
 class WebserviceListController {
 
+    def authService
+
     def byCategory() {
 
       def categories = au.org.ala.webapi.Category.list()
@@ -14,7 +16,7 @@ class WebserviceListController {
       }
 
       //[wsByCategory: wsByCategory]
-      render(view: "byGroup", model: [wsByGroup: wsByCategory, byCategory:true])
+      render(view: "byGroup", model: [wsByGroup: wsByCategory, byCategory:true, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
 
     def byApp() {
@@ -28,7 +30,7 @@ class WebserviceListController {
       }
 
 //      [wsByApp: wsByApp]
-      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false])
+      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
 
     def bySpecificApp() {
@@ -39,6 +41,6 @@ class WebserviceListController {
 
       wsByApp[app] = app.webservices
 
-      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false])
+      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
 }

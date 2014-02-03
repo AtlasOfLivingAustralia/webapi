@@ -2,9 +2,9 @@ class UrlMappings {
 
 	static mappings = {
 
-		"/"(controller:'webserviceList', action: "byCategory")
-		"/categories"(controller:'webserviceList', action: "byCategory")
-		"/apps"(controller:'webserviceList', action: "byApp")
+		name homePage: "/"(controller:'webserviceList', action: "byCategory")
+		name byCategory: "/categories"(controller:'webserviceList', action: "byCategory")
+		name byApps: "/apps"(controller:'webserviceList', action: "byApp")
 		"/apps/$name"(controller:'webserviceList', action: "bySpecificApp")
 
 		"/admin/$controller/$action?/$id?"{
@@ -12,6 +12,13 @@ class UrlMappings {
 				// apply constraints here
 			}
 		}
+
+		"/logout/$action?/$id?"(controller:'logout'){
+			constraints {
+				// apply constraints here
+			}
+		}
+
 
 		"500"(view:'/error')
 	}

@@ -109,7 +109,13 @@
             <g:each in="${wsByGroup.keySet()}" var="group">
 
                 <g:if test="${wsByGroup[group]}">
-                <h2 class="categoryHdr">${group.name} <span><small> - ${group.description}</small></span></h2>
+                <h2 class="categoryHdr">${group.name} <span><small> - ${group.shortDescription}</small></span></h2>
+                <g:if test="${group.description}">
+                    <p>
+                      <markdown:renderHtml>${group.description}</markdown:renderHtml>
+                    </p>
+                </g:if>
+
                 <ul style="list-style: none; margin:0;">
                 <g:each in="${wsByGroup[group]}" var="webService">
                     <li id="webService-${webService.id}" class="webService">
@@ -124,11 +130,18 @@
                             -
                             <span class="webserviceUrl webServiceShowDetails">${webService.getQueryUrl()}</span>
 
-                           <span class="pull-right" style="padding-right:10px;">
-                               %{--<a href="javascript:void(0);" class=" webServiceShowDetails btn btn-small">Show details</a>--}%
-                               <g:link controller="webService" action="edit" id="${webService.id}" class="btn btn-small">Edit</g:link>
-                               <g:link controller="example" action="createForWS" params="[id:webService.id]" class="btn btn-small">Add example</g:link>
-                           </span>
+                            <g:set var="returnTo" value="/"/>
+
+
+                           <g:if test="${isEditor}">
+                               <span class="pull-right" style="padding-right:10px;">
+                                   <g:link controller="webService" action="edit" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">Edit</g:link>
+                                   <g:link controller="example" action="createForWS" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">
+                                       Add example</g:link>
+                                   <g:link controller="webService" action="create" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">
+                                       Duplicate</g:link>
+                               </span>
+                           </g:if>
                         </h4>
 
                         <div id="webService-details-${webService.id}" class="webServiceDetails hide">
@@ -140,13 +153,10 @@
                                    <tr>
                                        <td>${param.name}
                                         <g:if test="${param.mandatory}"><span class="required-indicator">*</span></g:if>
-                                        <g:if test="${param.deprecated}"><span class="required-indicator">(deprecated)</span></g:if>
+                                        <g:if test="${param.deprecated}"><span class="deprecated-indicator text-warning">(deprecated)</span></g:if>
                                        </td>
                                        <td>${param.type}</td>
                                        <td>
-                                           %{--<span class="pull-right">--}%
-                                               %{--<g:link controller="param" action="edit" id="${param.id}" class="btn btn-small">Edit</g:link>--}%
-                                           %{--</span>--}%
                                            <span class="paramDescription">
                                            <markdown:renderHtml>${param.description}</markdown:renderHtml>
                                            </span>
@@ -163,7 +173,7 @@
                                     <g:each in="${webService.examples}" var="example">
                                        <li>
                                            <span class="pull-right" style="padding-right:10px;">
-                                               <g:link controller="example" action="edit" id="${example.id}" class="btn btn-small">Edit</g:link>
+                                               <g:link controller="example" action="edit" id="${example.id}" params="[returnTo:returnTo]" class="btn btn-small">Edit</g:link>
                                            </span>
 
                                            <h5>${example.name}</h5>
@@ -176,6 +186,13 @@
                                     </ul>
                                 </div>
                             </g:if>
+
+                            <g:if test="${!webService.examples && !webService.params}">
+                                <div class="examples">
+                                    View : <a href="${webService.getQueryUrl()}">${webService.getQueryUrl()}</a>
+                                </div>
+                            </g:if>
+
                         </div>
                     </li>
                 </g:each>

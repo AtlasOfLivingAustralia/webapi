@@ -3,11 +3,12 @@ package au.org.ala.webapi
 class WebService {
 
     String name
-    String description = "To be added..."
+    String description = "."
     String url = "" // excluding the baseUrl
     String httpMethod = "GET"
     Boolean deprecated = false
     String outputFormat = "json"
+    String exampleOutput = ""
 
     Date dateCreated
     Date lastUpdated
@@ -65,6 +66,7 @@ class WebService {
         deprecated(nullable:false)
         httpMethod(nullable:false, inList:httpMethods)
         outputFormat(nullable:false, inList:format)
+        exampleOutput(nullable:false, maxSize: 2000)
     }
 
     static mapping = {

@@ -3,7 +3,8 @@ package au.org.ala.webapi
 class Category {
 
     String name
-    String description
+    String shortDescription = ""
+    String description = ""
 
     String toString(){
         return name
@@ -11,7 +12,8 @@ class Category {
 
     static constraints = {
         name(nullable:false)
-        description(nullable:true)
+        shortDescription(nullable:false, maxSize: 200)
+        description(nullable:false, maxSize: 2000)
     }
 
     static mapping = {

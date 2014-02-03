@@ -1,5 +1,7 @@
 <%@ page import="au.org.ala.webapi.WebService" %>
 
+<input type="hidden" name="returnTo" value="${params.returnTo}"/>
+
 <div class="row-fluid">
 
 <div class="span9">
@@ -137,15 +139,5 @@ Removing/changing field names may affect existing examples if they are using the
                 $this.siblings('input').val('false')
             }
         });
-
-//        $('.paramCheckbox').each(function(){
-//            var $this = $(this);
-//            if($this.siblings('input').attr('checked') == 'checked'){
-//                $this.siblings('input').val('true')
-//            } else {
-//                $this.siblings('input').val('false')
-//            }
-//        });
-
     })
 </r:script>

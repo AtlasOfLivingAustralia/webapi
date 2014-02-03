@@ -16,7 +16,35 @@ class WebServiceController {
     }
 
     def create() {
-        [webServiceInstance: new WebService(params)]
+
+        if(params.id){
+            def webService = WebService.findById(params.id)
+            def clone = new WebService([
+                    name: "Copy of " + webService.name,
+                    description: webService.name,
+                    httpMethod: webService.httpMethod,
+                    deprecated: webService.deprecated,
+                    url: webService.url,
+                    outputFormat: webService.outputFormat,
+                    exampleOutput: webService.exampleOutput
+            ])
+            def clonedParams = []
+            webService.params.each { param ->
+               clonedParams << new Param([
+                       name:param.name,
+                       description: param.description,
+                       type: param.type,
+                       mandatory: param.mandatory,
+                       deprecated : param.deprecated,
+                       includeInTitle : param.includeInTitle,
+                       format : param.format
+               ])
+            }
+            clone.params = clonedParams
+            [webServiceInstance: clone]
+        } else {
+            [webServiceInstance: new WebService(params)]
+        }
     }
 
     def save() {
@@ -29,7 +57,11 @@ class WebServiceController {
         storeParams(webServiceInstance, params)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'webService.label', default: 'WebService'), webServiceInstance.id])
-        redirect(action: "show", id: webServiceInstance.id)
+        if(params.returnTo){
+            redirect(url: params.returnTo)
+        } else {
+            redirect(action: "show", id: webServiceInstance.id)
+        }
     }
 
     def show(Long id) {
@@ -135,7 +167,11 @@ class WebServiceController {
          //add new
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'webService.label', default: 'WebService'), webServiceInstance.id])
-        redirect(action: "show", id: webServiceInstance.id)
+        if(params.returnTo){
+            redirect(url: params.returnTo)
+        } else {
+            redirect(action: "show", id: webServiceInstance.id)
+        }
     }
 //
     private void storeParams(webServiceInstance, params) {

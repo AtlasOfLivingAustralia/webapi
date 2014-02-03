@@ -1,5 +1,7 @@
 <%@ page import="au.org.ala.webapi.Param; au.org.ala.webapi.Example" %>
 
+<input type="hidden" name="returnTo" value="${params.returnTo}"/>
+
 <div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'webService', 'error')} required">
     <g:if test="${webService}">
         %{--<g:textField name="webService.name" value="${webService?.name} />--}%
