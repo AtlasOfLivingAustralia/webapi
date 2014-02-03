@@ -27,7 +27,6 @@ class BootStrap {
         if(!webService){
             webService = new au.org.ala.webapi.WebService([app: app, name:name, description:description, url:url])
             webService.save(flush:true)
-//            def catSet = Collections.emptySet().addAll(categories)
             webService.categories = categories
             webService.save(flush:true)
         }
@@ -44,7 +43,7 @@ class BootStrap {
                param.errors.each { println it }
             }
         } else {
-            println(webService.toString() + " : " + name + " - already exists....")
+            log.debug(webService.toString() + " : " + name + " - already exists....")
         }
         param
     }
@@ -96,7 +95,7 @@ class BootStrap {
            if(param){
              new ExampleParam([example:example,param:param,value:it.value]).save(flush:true)
            } else {
-               println "Couldnt find param for webservice: " + webService + ", with name "+ it.name
+               log.debug "Couldnt find param for webservice: " + webService + ", with name "+ it.name
            }
        }
     }
