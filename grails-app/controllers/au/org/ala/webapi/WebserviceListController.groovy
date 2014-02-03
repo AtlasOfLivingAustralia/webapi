@@ -14,7 +14,7 @@ class WebserviceListController {
       }
 
       //[wsByCategory: wsByCategory]
-      render(view: "byGroup", model: [wsByGroup: wsByCategory])
+      render(view: "byGroup", model: [wsByGroup: wsByCategory, byCategory:true])
     }
 
     def byApp() {
@@ -28,17 +28,17 @@ class WebserviceListController {
       }
 
 //      [wsByApp: wsByApp]
-      render(view: "byGroup", model: [wsByGroup: wsByApp])
+      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false])
     }
 
     def bySpecificApp() {
 
-      def app = App.findByName(params.name)
+      def app = App.findByNameIlike(params.name)
 
       def wsByApp = [:]
 
       wsByApp[app] = app.webservices
 
-      render(view: "byGroup", model: [wsByGroup: wsByApp])
+      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false])
     }
 }

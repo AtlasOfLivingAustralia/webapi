@@ -44,6 +44,17 @@
                margin-right:10px;
            }
 
+           .deprecatedWS {
+               background-color: #610B0B;
+               color: #FFFFFF;
+               padding:5px;
+               -webkit-border-radius: 5px;
+               -moz-border-radius: 5px;
+               border-radius: 5px;
+               text-transform:uppercase;
+               margin-right:10px;
+           }
+
            .categoryHdr { margin-top: 30px; }
 
            .webService {
@@ -86,6 +97,13 @@
 			<h1>Web service API</h1>
             <p class="lead">
                 The (nearly) complete listing of the web services for the ALA. Send complements/issues to support@ala.org.au.
+                <br/>
+                <g:if test="${byCategory}">
+                    The webservices are listed by category. To list by application, <g:link action="byApp">click here</g:link>.
+                </g:if>
+                <g:else>
+                    The webservices are listed by application. To list by category, <g:link action="byCategory">click here</g:link>.
+                </g:else>
             </p>
 
             <g:each in="${wsByGroup.keySet()}" var="group">
@@ -98,6 +116,10 @@
                         <h4>
                             <span class="httpMethod-${webService.httpMethod} webServiceShowDetails">${webService.httpMethod}</span>
                             <span class="outputFormat webServiceShowDetails">${webService.outputFormat}</span>
+                            <g:if test="${webService.deprecated}">
+                                <span class="deprecatedWS webServiceShowDetails">DEPRECATED</span>
+                            </g:if>
+
                             <span class="webserviceName webServiceShowDetails">${webService.name}</span>
                             -
                             <span class="webserviceUrl webServiceShowDetails">${webService.getQueryUrl()}</span>

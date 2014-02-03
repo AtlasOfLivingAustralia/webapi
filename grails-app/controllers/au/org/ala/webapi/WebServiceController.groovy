@@ -26,23 +26,6 @@ class WebServiceController {
             return
         }
 
-        //save the parameters
-//        def paramNames = params.list('paramName')
-//        def paramTypes = params.list('paramType')
-//        def paramMandatorys = params.list('_paramMandatory')
-//        def paramDescriptions = params.list('paramDescription')
-//
-//        paramNames.eachWithIndex { entry,  i ->
-//
-//            def paraName = entry
-//            def paramType = paramTypes[i]
-//            def paramMandatory = Boolean.parseBoolean(paramMandatorys[i])
-//            def paramDescription = paramDescriptions[i]
-//
-//            Param p = new Param([webService:webServiceInstance, name:paraName,
-//                    type:paramType, mandatory:paramMandatory, description:paramDescription])
-//            p.save(flush:true)
-//        }
         storeParams(webServiceInstance, params)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'webService.label', default: 'WebService'), webServiceInstance.id])
@@ -105,6 +88,7 @@ class WebServiceController {
         def paramTypes = params.list('paramType')
         def paramMandatorys = params.list('_paramMandatory')
         def paramDeprecateds = params.list('_paramDeprecated')
+        def paramIncludeInTitles = params.list('_paramIncludeInTitle')
         def paramDescriptions = params.list('paramDescription')
 
         //existing params for this service
@@ -117,6 +101,7 @@ class WebServiceController {
             def paramType = paramTypes[i]
             def paramMandatory = Boolean.parseBoolean(paramMandatorys[i])
             def paramDeprecated = Boolean.parseBoolean(paramDeprecateds[i])
+            def paramIncludeInTitle = Boolean.parseBoolean(paramIncludeInTitles[i])
             def paramDescription = paramDescriptions[i]
 
             if(paramId){
@@ -125,6 +110,7 @@ class WebServiceController {
                 p.mandatory = paramMandatory
                 p.name = paramName
                 p.deprecated = paramDeprecated
+                p.includeInTitle = paramIncludeInTitle
                 p.type = paramType
                 p.description = paramDescription
                 p.save(flush:true)
@@ -157,16 +143,26 @@ class WebServiceController {
         def paramNames = params.list('paramName')
         def paramTypes = params.list('paramType')
         def paramMandatorys = params.list('_paramMandatory')
+        def paramDeprecateds = params.list('_paramDeprecated')
+        def paramIncludeInTitles = params.list('_paramIncludeInTitle')
         def paramDescriptions = params.list('paramDescription')
+
+        if(!webServiceInstance.params){
+            webServiceInstance.params = []
+        }
 
         paramNames.eachWithIndex { paramName, i ->
 
             def paramType = paramTypes[i]
             def paramMandatory = Boolean.parseBoolean(paramMandatorys[i])
+            def paramDeprecated = Boolean.parseBoolean(paramDeprecateds[i])
+            def paramIncludeInTitle = Boolean.parseBoolean(paramIncludeInTitles[i])
             def paramDescription = paramDescriptions[i]
 
             Param p = new Param([webService: webServiceInstance, name: paramName,
-                    type: paramType, mandatory: paramMandatory, description: paramDescription])
+                    type: paramType, mandatory: paramMandatory,
+                    deprecated: paramDeprecated,
+                    description: paramDescription, includeInTitle:paramIncludeInTitle])
             p.save(flush: true)
             webServiceInstance.params << p
         }

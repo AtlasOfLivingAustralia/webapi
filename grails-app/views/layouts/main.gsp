@@ -9,7 +9,7 @@
     <meta name="author" content="Atlas of Living Australia">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><g:layoutTitle /></title>
+    <title><g:layoutTitle /> | Atlas of Living Australia</title>
 
     <%-- Do not include JS & CSS files here - add them to your app's "application" module (in "Configuration/ApplicationResources.groovy") --%>
     <r:require modules="bootstrap, application"/>

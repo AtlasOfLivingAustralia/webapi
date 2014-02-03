@@ -7,7 +7,7 @@ class UrlMappings {
 		"/apps"(controller:'webserviceList', action: "byApp")
 		"/apps/$name"(controller:'webserviceList', action: "bySpecificApp")
 
-		"/$controller/$action?/$id?"{
+		"/admin/$controller/$action?/$id?"{
 			constraints {
 				// apply constraints here
 			}
