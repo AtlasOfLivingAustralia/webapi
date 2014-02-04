@@ -130,7 +130,11 @@
                                            <p><markdown:renderHtml>${example.description}</markdown:renderHtml></p>
                                            <p>
                                                URL: <a href="${example.getQueryUrl()}">${example.getQueryUrl()}</a>
-                                           </p>
+                                               <g:if test="${example.onlineViewer}">
+                                                   <br/>
+                                                   Online demo: <a href="${example.onlineViewer}">${example.onlineViewer}</a>
+                                               </g:if>
+                                            </p>
                                        </li>
                                     </g:each>
                                     </ul>

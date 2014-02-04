@@ -8,6 +8,7 @@ class Param {
     Boolean mandatory = false
     Boolean deprecated = false
     Boolean includeInTitle = false
+    Boolean restfulParam = false
     String format = ''  // for dates eg. yyyy-mm-dd
     Date dateCreated
     Date lastUpdated

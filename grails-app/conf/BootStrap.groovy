@@ -87,17 +87,17 @@ class BootStrap {
     }
 
     def addExample(au.org.ala.webapi.WebService webService, String name, List params){
-       def example = new Example([webService:webService, name:name])
-       example.save(flush:true)
-
-       params.each {
-           def param = au.org.ala.webapi.Param.findByWebServiceAndName(webService, it.name)
-           if(param){
-             new ExampleParam([example:example,param:param,value:it.value]).save(flush:true)
-           } else {
-               log.debug "Couldnt find param for webservice: " + webService + ", with name "+ it.name
-           }
-       }
+//       def example = new Example([webService:webService, name:name])
+//       example.save(flush:true)
+//
+//       params.each {
+//           def param = au.org.ala.webapi.Param.findByWebServiceAndName(webService, it.name)
+//           if(param){
+//             new ExampleParam([example:example,param:param,value:it.value]).save(flush:true)
+//           } else {
+//               log.debug "Couldnt find param for webservice: " + webService + ", with name "+ it.name
+//           }
+//       }
     }
 
     def init = { servletContext ->

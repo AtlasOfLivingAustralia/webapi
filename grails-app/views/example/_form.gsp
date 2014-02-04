@@ -32,6 +32,23 @@
     <g:textArea name="description" class="input-xxlarge" rows="5" value="${exampleInstance?.description}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'urlPath', 'error')} ">
+    <label for="name">
+        <g:message code="example.name.label" default="URL Path - use this for REST Style URLs that dont use request parameters"/>
+
+    </label>
+    <g:textField name="urlPath" class="input-xxlarge" value="${exampleInstance?.urlPath?:''}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'onlineViewer', 'error')} ">
+    <label for="name">
+        <g:message code="example.name.label" default="Link to a online viewer (e.g. API Kitchen, bl.ocks.org)"/>
+
+    </label>
+    <g:textField name="onlineViewer" class="input-xxlarge" value="${exampleInstance?.onlineViewer?:''}"/>
+</div>
+
+
 <div class="well well-small">
 
 <h3>Parameters

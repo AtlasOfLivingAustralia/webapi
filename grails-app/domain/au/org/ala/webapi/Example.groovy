@@ -5,6 +5,8 @@ class Example {
     String name
     String description = ""    // use markdown
     WebService webService
+    String urlPath = ""
+    String onlineViewer = ""
     Date dateCreated
     Date lastUpdated
 
@@ -16,21 +18,25 @@ class Example {
 
     def getQueryUrl(){
 
-        def paramString = ""
+        if(urlPath){
+            this.webService.app.baseUrl + this.urlPath
+        } else {
+            def paramString = ""
 
-        if(webService.httpMethod == "GET"){
-            if(params){
-               params.eachWithIndex { elem, idx ->
-                 if(idx == 0){
-                     paramString = "?"
-                 } else {
-                     paramString = paramString + "&"
-                 }
-                 paramString = paramString + elem.param.name + "=" + elem.value
-               }
+            if(this.webService.httpMethod == "GET"){
+                if(params){
+                   params.eachWithIndex { elem, idx ->
+                     if(idx == 0){
+                         paramString = "?"
+                     } else {
+                         paramString = paramString + "&"
+                     }
+                     paramString = paramString + elem.param.name + "=" + elem.value
+                   }
+                }
             }
+            this.webService.app.baseUrl + this.webService.url + paramString
         }
-        webService.app.baseUrl + webService.url + paramString
     }
 
     String toString(){
@@ -40,6 +46,8 @@ class Example {
     static constraints = {
         name(nullable:false)
         description(nullable:false)
+        urlPath(nullable:true)
+        onlineViewer(nullable:true)
     }
 
     static mapping = {
