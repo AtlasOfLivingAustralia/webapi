@@ -49,9 +49,9 @@
     </thead>
     <tbody id="paramsTBody">
         <g:if test="${exampleInstance.params}">
-            <g:each in="${exampleInstance.params}" var="param">
+            <g:each in="${exampleInstance.getSortedParams()}" var="param" status="paramStatus">
                 <tr>
-                     <g:render template="param"/>
+                     <g:render template="param" model="[param:param, paramStatus:paramStatus]"/>
                 </tr>
             </g:each>
        </g:if>

@@ -10,6 +10,10 @@ class Example {
 
     static hasMany = [params:ExampleParam]
 
+    def getSortedParams(){
+        params.sort { it.id }
+    }
+
     def getQueryUrl(){
 
         def paramString = ""

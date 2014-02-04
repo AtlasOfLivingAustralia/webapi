@@ -86,8 +86,10 @@
                                    <g:link controller="webService" action="edit" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">Edit</g:link>
                                    <g:link controller="example" action="createForWS" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">
                                        Add example</g:link>
-                                   <g:link controller="webService" action="create" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">
-                                       Duplicate</g:link>
+                                   <g:link controller="webService" action="create" id="${webService.id}"
+                                       title="Create a webservice based on this webservice"
+                                           params="[returnTo:returnTo]" class="btn btn-small">
+                                       Create copy</g:link>
                                </span>
                            </g:if>
                         </h4>

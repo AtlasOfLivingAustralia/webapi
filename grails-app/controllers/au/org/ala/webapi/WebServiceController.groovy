@@ -20,13 +20,15 @@ class WebServiceController {
         if(params.id){
             def webService = WebService.findById(params.id)
             def clone = new WebService([
+                    app: webService.app,
                     name: "Copy of " + webService.name,
                     description: webService.name,
                     httpMethod: webService.httpMethod,
                     deprecated: webService.deprecated,
                     url: webService.url,
                     outputFormat: webService.outputFormat,
-                    exampleOutput: webService.exampleOutput
+                    exampleOutput: webService.exampleOutput,
+                    categories: webService.categories
             ])
             def clonedParams = []
             webService.params.each { param ->

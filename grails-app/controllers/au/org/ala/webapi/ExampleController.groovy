@@ -44,7 +44,6 @@ class ExampleController {
         storeParams(exampleInstance, params)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'example.label', default: 'Example'), exampleInstance.id])
-        redirect(action: "show", id: exampleInstance.id)
 
         if(params.returnTo){
             redirect(url: params.returnTo)
