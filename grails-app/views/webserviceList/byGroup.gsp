@@ -4,71 +4,7 @@
 	<head>
 		<meta name="layout" content="main"/>
 		<title>Web service API</title>
-
-        <style type="text/css">
-           .httpMethod-GET {
-               background-color: #0f6ab4;
-               color: #FFFFFF;
-               padding:5px;
-               -webkit-border-radius: 5px;
-               -moz-border-radius: 5px;
-               border-radius: 5px;
-           }
-
-           .httpMethod-POST {
-               background-color: #10a54a;
-               color: #FFFFFF;
-               padding:5px;
-               -webkit-border-radius: 5px;
-               -moz-border-radius: 5px;
-               border-radius: 5px;
-           }
-
-           .httpMethod-DELETE {
-               background-color: #0f6ab4;
-               color: #FFFFFF;
-               padding:5px;
-               -webkit-border-radius: 5px;
-               -moz-border-radius: 5px;
-               border-radius: 5px;
-           }
-
-           .outputFormat {
-               background-color: grey;
-               color: #FFFFFF;
-               padding:5px;
-               -webkit-border-radius: 5px;
-               -moz-border-radius: 5px;
-               border-radius: 5px;
-               text-transform:uppercase;
-               margin-right:10px;
-           }
-
-           .deprecatedWS {
-               background-color: #610B0B;
-               color: #FFFFFF;
-               padding:5px;
-               -webkit-border-radius: 5px;
-               -moz-border-radius: 5px;
-               border-radius: 5px;
-               text-transform:uppercase;
-               margin-right:10px;
-           }
-
-           .categoryHdr { margin-top: 30px; }
-
-           .webService {
-            background-color: #e7f0f7;
-            border: 1px solid #c3d9ec;
-            padding-left:5px;
-            cursor:pointer;
-           }
-
-           .examples {
-               margin-bottom:20px;
-           }
-
-        </style>
+        <r:require modules="webapi,tooltip"/>
 	</head>
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -120,8 +56,18 @@
                 <g:each in="${wsByGroup[group]}" var="webService">
                     <li id="webService-${webService.id}" class="webService">
                         <h4>
-                            <span class="httpMethod-${webService.httpMethod} webServiceShowDetails">${webService.httpMethod}</span>
-                            <span class="outputFormat webServiceShowDetails">${webService.outputFormat}</span>
+                            <span class="httpMethod-${webService.httpMethod} webServiceShowDetails">
+                                <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${webService.httpMethod} request">
+                                    ${webService.httpMethod}
+                                </a>
+                            </span>
+
+
+                            <span class="outputFormat webServiceShowDetails">
+                                <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${webService.outputFormat.toUpperCase()} format">
+                                ${webService.outputFormat?.toUpperCase()}
+                                </a>
+                            </span>
                             <g:if test="${webService.deprecated}">
                                 <span class="deprecatedWS webServiceShowDetails">DEPRECATED</span>
                             </g:if>
@@ -210,6 +156,9 @@ $(function() {
         // Animation complete.
       });
     });
+
+    $('.wsLabel').tooltip({});
+
  });
 </r:script>
 

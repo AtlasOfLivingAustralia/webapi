@@ -1,0 +1,71 @@
+a.wsLabel {
+   color: #ffffff;
+}
+
+a.wsLabel:hover {
+   text-decoration: none;
+}
+
+.httpMethod-GET {
+   background-color: #0f6ab4;
+   color: #FFFFFF;
+   padding:5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin-right:5px;
+}
+
+.httpMethod-POST {
+   background-color: #10a54a;
+   color: #FFFFFF;
+   padding:5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin-right:5px;
+}
+
+.httpMethod-DELETE {
+   background-color: #0f6ab4;
+   color: #FFFFFF;
+   padding:5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin-right:5px;
+}
+
+.outputFormat {
+   background-color: grey;
+   color: #FFFFFF;
+   padding:5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin-right:10px;
+}
+
+.deprecatedWS {
+   background-color: #610B0B;
+   color: #FFFFFF;
+   padding:5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   text-transform:uppercase;
+   margin-right:10px;
+}
+
+.categoryHdr { margin-top: 30px; }
+
+.webService {
+background-color: #e7f0f7;
+border: 1px solid #c3d9ec;
+padding-left:5px;
+cursor:pointer;
+}
+
+.examples {
+   margin-bottom:20px;
+}
