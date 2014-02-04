@@ -7,14 +7,14 @@
 </td>
 <td class="paramCheckboxes">
     <div class="checkbox">
-        <input type="hidden" name="_paramMandatory" value="${param?.includeInTitle?'true':'false'}"/>
+        <input type="hidden" name="_paramMandatory" value="${param?.mandatory?'true':'false'}"/>
         <input type="checkbox" class="paramCheckbox" name="paramMandatory"  value="${param?.mandatory}"
             <g:if test="${param?.mandatory}">checked="checked"</g:if>
         />
         Mandatory
     </div>
     <div class="checkbox">
-        <input type="hidden" name="_paramDeprecated" value="${param?.includeInTitle?'true':'false'}"/>
+        <input type="hidden" name="_paramDeprecated" value="${param?.deprecated?'true':'false'}"/>
         <input type="checkbox" class="paramCheckbox" name="paramDeprecated" value="${param?.deprecated}"
             <g:if test="${param?.deprecated}">checked="checked"</g:if>
         />

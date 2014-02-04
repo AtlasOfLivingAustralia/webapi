@@ -197,10 +197,13 @@ class WebServiceController {
             def paramIncludeInTitle = Boolean.parseBoolean(paramIncludeInTitles[i])
             def paramDescription = paramDescriptions[i]
 
-            Param p = new Param([webService: webServiceInstance, name: paramName,
-                    type: paramType, mandatory: paramMandatory,
+            Param p = new Param([webService: webServiceInstance,
+                    name: paramName,
+                    type: paramType,
+                    mandatory: paramMandatory,
                     deprecated: paramDeprecated,
-                    description: paramDescription, includeInTitle:paramIncludeInTitle])
+                    description: paramDescription,
+                    includeInTitle:paramIncludeInTitle])
             p.save(flush: true)
             webServiceInstance.params << p
         }
