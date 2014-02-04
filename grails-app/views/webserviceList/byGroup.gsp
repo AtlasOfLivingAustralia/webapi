@@ -9,25 +9,27 @@
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
-        <div class="pull-right">
-            <ul class="nav nav-pills">
-              <li class="dropdown">
-                <a class="dropdown-toggle"
-                   data-toggle="dropdown"
-                   href="#">
-                    Admin
-                    <b class="caret"></b>
-                  </a>
-                <ul class="dropdown-menu">
-                    <li><g:link controller="webService" action="create">Add Webservice</g:link></li>
-                    <li><g:link controller="app">Apps</g:link></li>
-                    <li><g:link controller="webService">Webservices</g:link></li>
-                    <li><g:link controller="category">Categories</g:link></li>
-                    <li><g:link controller="example">Examples</g:link></li>
+        <g:if test="${isEditor}">
+            <div class="pull-right">
+                <ul class="nav nav-pills">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#">
+                        Admin
+                        <b class="caret"></b>
+                      </a>
+                    <ul class="dropdown-menu">
+                        <li><g:link controller="webService" action="create">Add Webservice</g:link></li>
+                        <li><g:link controller="app">Apps</g:link></li>
+                        <li><g:link controller="webService">Webservices</g:link></li>
+                        <li><g:link controller="category">Categories</g:link></li>
+                        <li><g:link controller="example">Examples</g:link></li>
+                    </ul>
+                  </li>
                 </ul>
-              </li>
-            </ul>
-        </div>
+            </div>
+        </g:if>
 
 		<div  role="main">
 			<h1>Web service API</h1>
