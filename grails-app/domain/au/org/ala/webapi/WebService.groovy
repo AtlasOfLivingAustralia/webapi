@@ -56,7 +56,7 @@ class WebService {
 
     static httpMethods = ['GET','POST','PUT','DELETE']
 
-    static format = ['json', 'png', 'csv', 'zip', 'xml', 'jpg', 'kml', 'shp', 'gzip', 'eml', 'rif-cs','rdf+xml']
+    static format = ['json', 'png', 'csv', 'zip', 'xml', 'jpg', 'kml', 'shp', 'gzip', 'eml', 'rif-cs','rdf+xml','text', 'wkt']
 
     static constraints = {
         name(nullable:false)
