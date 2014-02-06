@@ -22,7 +22,7 @@ class WebServiceController {
             def clone = new WebService([
                     app: webService.app,
                     name: "Copy of " + webService.name,
-                    description: webService.name,
+                    description: webService.description,
                     httpMethod: webService.httpMethod,
                     deprecated: webService.deprecated,
                     url: webService.url,
