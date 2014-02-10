@@ -49,7 +49,7 @@
             <g:each in="${wsByGroup.keySet()}" var="group">
 
                 <g:if test="${wsByGroup[group]}">
-                <h2 class="categoryHdr">${group.name} <span><small> - ${group.shortDescription}</small></span></h2>
+                <h2 class="categoryHdr">${group.name} <span class="hidden-phone"><small> - ${group.shortDescription}</small></span></h2>
                 <g:if test="${group.description}">
                     <p>
                       <markdown:renderHtml>${group.description}</markdown:renderHtml>
@@ -68,7 +68,7 @@
                                        Add example</g:link>
                                    <g:link controller="webService" action="create" id="${webService.id}"
                                        title="Create a webservice based on this webservice"
-                                           params="[returnTo:returnTo]" class="btn btn-small">
+                                           params="[returnTo:returnTo]" class="btn btn-small hidden-phone">
                                        Create copy</g:link>
                                </span>
                            </g:if>
@@ -86,7 +86,7 @@
 
                             <div class="row-fluid">
 
-                                <span class="httpMethods webServiceShowDetails ">
+                                <span class="httpMethods webServiceShowDetails hidden-phone">
                                     <g:each in="${webService.httpMethod}" var="httpMethod">
                                     <span class="httpMethod httpMethod-${httpMethod}">
                                         <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${httpMethod} request">
@@ -96,7 +96,7 @@
                                     </g:each>
                                 </span>
 
-                                <span class="outputLabels webServiceShowDetails ">
+                                <span class="outputLabels webServiceShowDetails hidden-phone">
                                     <g:each in="${webService.outputFormat}" var="outputFormat">
                                     <span class="outputFormat">
                                         <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${outputFormat.toUpperCase()} format">
@@ -105,6 +105,19 @@
                                     </span>
                                     </g:each>
                                 </span>
+
+
+                                <span class="visible-phone">
+                                    <ul class="inline">
+                                    <g:each in="${webService.httpMethod}" var="httpMethod">
+                                        <li class="label label-http-${httpMethod}">${httpMethod}</li>
+                                    </g:each>
+                                    <g:each in="${webService.outputFormat}" var="outputFormat">
+                                        <li class="label">${outputFormat?.toUpperCase()}</li>
+                                    </g:each>
+                                   </ul>
+                                </span>
+
 
                                 <g:if test="${webService.deprecated}">
                                     <span class="deprecatedLabel webServiceShowDetails">

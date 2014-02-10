@@ -15,6 +15,13 @@ a.wsLabel:hover {
    text-decoration: none;
 }
 
+.label-http-GET { background-color: #0f6ab4; }
+.label-http-POST { background-color: #10a54a; }
+.label-http-DELETE { background-color: #a41e22; }
+.label-http-PUT { background-color: #c5862b; }
+.label-http-HEAD { background-color: #808000; }
+
+
 .httpMethod-GET {
    background-color: #0f6ab4;
    color: #FFFFFF;
