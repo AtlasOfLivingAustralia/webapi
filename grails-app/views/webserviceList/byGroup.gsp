@@ -5,6 +5,7 @@
 		<meta name="layout" content="main"/>
 		<title>Web service API</title>
         <r:require modules="webapi,tooltip"/>
+        %{--<script>hljs.initHighlightingOnLoad();</script>--}%
 	</head>
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -22,6 +23,7 @@
                     <ul class="dropdown-menu">
                         <li><g:link controller="webService" action="create">Add Webservice</g:link></li>
                         <li><g:link controller="app">Apps</g:link></li>
+                        <li><g:link controller="format">Output formats</g:link></li>
                         <li><g:link controller="webService">Webservices</g:link></li>
                         <li><g:link controller="category">Categories</g:link></li>
                         <li><g:link controller="example">Examples</g:link></li>
@@ -58,28 +60,6 @@
                 <g:each in="${wsByGroup[group]}" var="webService">
                     <li id="webService-${webService.id}" class="webService">
                         <h4>
-                            <span class="httpMethod-${webService.httpMethod} webServiceShowDetails">
-                                <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${webService.httpMethod} request">
-                                    ${webService.httpMethod}
-                                </a>
-                            </span>
-
-
-                            <span class="outputFormat webServiceShowDetails">
-                                <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${webService.outputFormat.toUpperCase()} format">
-                                ${webService.outputFormat?.toUpperCase()}
-                                </a>
-                            </span>
-                            <g:if test="${webService.deprecated}">
-                                <span class="deprecatedWS webServiceShowDetails">DEPRECATED</span>
-                            </g:if>
-
-                            <span class="webserviceName webServiceShowDetails">${webService.name}</span>
-                            -
-                            <span class="webserviceUrl webServiceShowDetails">${webService.getQueryUrl()}</span>
-
-                            <g:set var="returnTo" value="/"/>
-
 
                            <g:if test="${isEditor}">
                                <span class="pull-right" style="padding-right:10px;">
@@ -92,6 +72,51 @@
                                        Create copy</g:link>
                                </span>
                            </g:if>
+
+
+                            <div class="row-fluid" style="margin-bottom:10px;">
+
+                                <div class="webserviceName webServiceShowDetails ">
+                                    <span>${webService.name}</span>
+                                    <span class="separator hidden-phone hidden-tablet"> - </span>
+                                    <span class="urlLarge hidden-phone hidden-tablet">${webService.getQueryUrl()}</span>
+                                    <span class="urlSmall separator visible-phone visible-tablet">${webService.getQueryUrl()}</span>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+
+                                <span class="httpMethods webServiceShowDetails ">
+                                    <g:each in="${webService.httpMethod}" var="httpMethod">
+                                    <span class="httpMethod httpMethod-${httpMethod}">
+                                        <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${httpMethod} request">
+                                            ${httpMethod}
+                                        </a>
+                                    </span>
+                                    </g:each>
+                                </span>
+
+                                <span class="outputLabels webServiceShowDetails ">
+                                    <g:each in="${webService.outputFormat}" var="outputFormat">
+                                    <span class="outputFormat">
+                                        <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${outputFormat.toUpperCase()} format">
+                                        ${outputFormat?.toUpperCase()}
+                                        </a>
+                                    </span>
+                                    </g:each>
+                                </span>
+
+                                <g:if test="${webService.deprecated}">
+                                    <span class="deprecatedLabel webServiceShowDetails">
+                                        <span>DEPRECATED</span>
+                                    </span>
+                                </g:if>
+                            </div>
+
+                            <g:set var="returnTo" value="/"/>
+
+
+
                         </h4>
 
                         <div id="webService-details-${webService.id}" class="webServiceDetails hide">
@@ -114,6 +139,13 @@
                                    </tr>
                                 </g:each>
                                 </table>
+                            </g:if>
+
+                            <g:if test="${webService.exampleOutput}">
+                                <div class="exampleOutput">
+                                    <h4>Example ouput</h4>
+                                    <pre><code>${webService.exampleOutput}</code></pre>
+                                </div>
                             </g:if>
 
                             <g:if test="${webService.examples}">
@@ -160,7 +192,7 @@
 $(function() {
     //add click events for links
     $( ".webServiceShowDetails" ).click(function() {
-      $( this).parent().parent().children( ".webServiceDetails" ).toggle( "slow", function() {
+      $( this).parent().parent().parent().children( ".webServiceDetails" ).toggle( "slow", function() {
         // Animation complete.
       });
     });

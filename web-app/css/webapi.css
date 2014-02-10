@@ -1,3 +1,12 @@
+.webserviceName .separator {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.urlSmall {
+    font-size: 12px;
+}
+
 a.wsLabel {
    color: #ffffff;
 }
@@ -26,8 +35,28 @@ a.wsLabel:hover {
    margin-right:5px;
 }
 
+.httpMethod-PUT {
+   background-color: #c5862b;
+   color: #FFFFFF;
+   padding:5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin-right:5px;
+}
+
+.httpMethod-HEAD {
+   background-color: #808000;
+   color: #FFFFFF;
+   padding:5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+   margin-right:5px;
+}
+
 .httpMethod-DELETE {
-   background-color: #0f6ab4;
+   background-color: #a41e22;
    color: #FFFFFF;
    padding:5px;
    -webkit-border-radius: 5px;
@@ -43,7 +72,7 @@ a.wsLabel:hover {
    -webkit-border-radius: 5px;
    -moz-border-radius: 5px;
    border-radius: 5px;
-   margin-right:10px;
+   margin-right:5px;
 }
 
 .deprecatedWS {
@@ -60,10 +89,10 @@ a.wsLabel:hover {
 .categoryHdr { margin-top: 30px; }
 
 .webService {
-background-color: #e7f0f7;
-border: 1px solid #c3d9ec;
-padding-left:5px;
-cursor:pointer;
+    background-color: #e7f0f7;
+    border: 1px solid #c3d9ec;
+    padding-left:10px;
+    cursor:pointer;
 }
 
 .examples {

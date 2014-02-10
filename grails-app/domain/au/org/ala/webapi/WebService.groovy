@@ -5,9 +5,8 @@ class WebService {
     String name
     String description = "."
     String url = "" // excluding the baseUrl
-    String httpMethod = "GET"
+//    String httpMethod = "GET"
     Boolean deprecated = false
-    String outputFormat = "json"
     String exampleOutput = ""
 
     Date dateCreated
@@ -27,7 +26,7 @@ class WebService {
 
         def paramString = ""
 
-        if(httpMethod == "GET"){
+        if(httpMethod.contains("GET")){
             def params = Param.findAllByWebServiceAndIncludeInTitle(this, true)
             if(params){
                params.eachWithIndex { elem, idx ->
@@ -52,20 +51,15 @@ class WebService {
     }
 
 
-    static hasMany = [params:Param, examples:Example, categories:Category]
+    static hasMany = [outputFormat:String, httpMethod: String, params:Param, examples:Example, categories:Category]
 
-    static httpMethods = ['GET','POST','PUT','DELETE']
-
-    static format = ['json', 'png', 'csv', 'zip', 'xml', 'jpg', 'kml', 'shp', 'gzip', 'eml', 'rif-cs','rdf+xml','text', 'wkt']
+    static httpMethods = ['GET','POST','PUT','DELETE','HEAD']
 
     static constraints = {
         name(nullable:false)
         description(nullable:false, maxSize: 2000)
         url(nullable:false)
-        httpMethod(nullable:false)
         deprecated(nullable:false)
-        httpMethod(nullable:false, inList:httpMethods)
-        outputFormat(nullable:false, inList:format)
         exampleOutput(nullable:false, maxSize: 2000)
     }
 

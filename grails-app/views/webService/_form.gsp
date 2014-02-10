@@ -1,4 +1,4 @@
-<%@ page import="au.org.ala.webapi.WebService" %>
+<%@ page import="au.org.ala.webapi.Format; au.org.ala.webapi.WebService" %>
 
 <input type="hidden" name="returnTo" value="${params.returnTo}"/>
 
@@ -36,6 +36,13 @@
 	<g:textArea name="description" cols="40" rows="5" maxlength="2000" class="input-xxlarge span12" value="${webServiceInstance?.description}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: webServiceInstance, field: 'exampleOutput', 'error')} ">
+	<label for="exampleOutput">
+		<g:message code="webService.exampleOutput.label" default="Example output (use markdown if required)" />
+	</label>
+	<g:textArea name="exampleOutput" cols="40" rows="5" maxlength="2000" class="input-xxlarge span12" value="${webServiceInstance?.exampleOutput}"/>
+</div>
+
 </div>
 <div class="span3">
 
@@ -44,7 +51,7 @@
 		<g:message code="webService.httpMethod.label" default="Http Method" />
 		
 	</label>
-	<g:select name="httpMethod" from="${webServiceInstance.constraints.httpMethod.inList}" value="${webServiceInstance?.httpMethod}" valueMessagePrefix="webService.httpMethod" noSelection="['': '']"/>
+	<g:select name="httpMethod" from="${webServiceInstance.httpMethods}" value="${webServiceInstance?.httpMethod}" valueMessagePrefix="webService.httpMethod" noSelection="['': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: webServiceInstance, field: 'deprecated', 'error')} ">
@@ -61,7 +68,7 @@
 		<g:message code="webService.outputFormat.label" default="Output Format" />
 		
 	</label>
-	<g:select name="outputFormat" from="${webServiceInstance.constraints.outputFormat.inList}" value="${webServiceInstance?.outputFormat}" valueMessagePrefix="webService.outputFormat" noSelection="['': '']"/>
+	<g:select name="outputFormat" from="${Format.list()}" value="${webServiceInstance?.outputFormat}" valueMessagePrefix="webService.outputFormat" noSelection="['': '']"/>
 </div>
 
 
@@ -77,13 +84,9 @@
 
 </div> <!-- row fluid -->
 
-<div class="well well-small">
+<div class="well well-small" style="padding-bottom:50px;">
 
 <h3>Parameters
-
-<span class="pull-right">
-    <a href="javascript:void(0);" class="btn" id="addRowBtn"><i class="icon-plus"></i>&nbsp;Add&nbsp;parameter</a>
-</span>
 
 </h3>
 
@@ -112,13 +115,16 @@ Removing/changing field names may affect existing examples if they are using the
        </g:if>
     </tbody>
 </table>
+<span class="pull-right">
+    <a href="javascript:void(0);" class="btn addRowBtn"><i class="icon-plus"></i>&nbsp;Add&nbsp;parameter</a>
+</span>
 
 </div>
 
 
 <r:script>
     $(function(){
-        $('#addRowBtn').click(function(){
+        $('.addRowBtn').click(function(){
             var clone = $('#tableTemplate').find('.paramRowTemplate').clone();
             clone.find('.deleteParam').click(function(){
                  $(this).parent().parent().remove();

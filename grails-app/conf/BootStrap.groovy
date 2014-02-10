@@ -1,5 +1,6 @@
 import au.org.ala.webapi.Example
 import au.org.ala.webapi.ExampleParam
+import au.org.ala.webapi.Format
 import au.org.ala.webapi.WebService
 
 class BootStrap {
@@ -86,6 +87,17 @@ class BootStrap {
         addParam(webService, 'fq', """Filter query of the form field:value e.g. q=genus:Macropus""", 'String')
     }
 
+    def addFormats(){
+        def f = ['json', 'csv', 'zip', 'xml', 'png', 'jpg', 'kml', 'kmz', 'shp', 'gzip', 'eml', 'rif-cs','rdf+xml','text', 'wkt', 'wfs', 'mcp', 'dwc-a']
+        f.each {
+            def ff = Format.findByName(it)
+            if(!ff){
+                new Format(name:it).save(flush:true)
+            }
+        }
+    }
+
+
     def addExample(au.org.ala.webapi.WebService webService, String name, List params){
 //       def example = new Example([webService:webService, name:name])
 //       example.save(flush:true)
@@ -102,94 +114,96 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        //apps
-        def biocache = addApp("Biocache", "Occurrence & Mapping services", "http://biocache.ala.org.au/ws")
-        def bvp = addApp("BVP", "Crowd sourcing", "http://volunteer.ala.org.au")
-        def analysis = addApp("Analysis", "Spatial analysis","http://spatial.ala.org.au/alaspatial/ws")
-        def layers = addApp("Layers", "Layer services including intersect","http://spatial.ala.org.au/ws")
-        def bie = addApp("BIE", "Species names and profiles", "http://bie.ala.org.au/ws")
-        def ecodata = addApp("Ecodata", "Occurrence & Mapping services", "http://ecodata.ala.org.au")
-        def lists = addApp("Lists", "Species lists", "http://lists.ala.org.au/ws")
-
-        //categories
-        def species = addCategory("Species profile", "Taxonomic name, concept lookups, autocomplete services ")
-        def occurrence = addCategory("Occurrence", "Specimen & observation data searching")
-        def geospatial = addCategory("Geospatial", "Including intersection services and gazetteer information")
-        def mapping = addCategory("Mapping", "Creating maps with WMS services, static heat maps")
-        def endemism = addCategory("Endemism", "Services for reports on endemism for an area")
-        def duplicates = addCategory("Data duplication", "Reports on the details of a duplication detection")
-        def parsing = addCategory("Parsing", "Services for parsing ad hoc occurrence data")
-        def dq = addCategory("Data quality", "Services for reporting on data quality for records")
-        def outliers = addCategory("Outlier detection", "Reporting the on outlier details for records")
-        def literature = addCategory("Literature", "Biodiversity Heritage Library free text search")
-        def collectionsMetadata = addCategory("Collections", "Collections metadata including taxonomic scope, attribution")
-        def dataResourcesMetadata = addCategory("Data resources", "Data resource metadata including taxonomic scope, attribution")
-        def dataProvidersMetadata = addCategory("Data providers", "Data provider metadata including taxonomic scope, attribution")
-        def institutionMetadata = addCategory("Institution", "Institution metadata including taxonomic scope, attribution")
-        def crowdsourcing = addCategory("Crowd sourcing", "Crowd sourcing information")
-
-        //species
-        def speciesSearch = addWebservice(bie, "Species search", "JSON species search", "/search", [species])
-        addSpeciesParams(speciesSearch)
-        def speciesDownload = addWebservice(bie, "Species download", "JSON species download", "/species/download", [species])
-        addSpeciesParams(speciesDownload)
-
-        //occurrence
-        def occurrenceSearch = addWebservice(biocache, "Occurrence search", "JSON occurrence search", "/occurrences/search", [occurrence])
-        addOccurrenceParams(occurrenceSearch)
-
-        def occurrenceDownload = addWebservice(biocache, "Occurrence download", "CSV occurrence download", "/occurrences/download",  [occurrence])
-        addOccurrenceParams(occurrenceDownload)
-
-        //density map
-        def densityMap = addWebservice(biocache, "Static heat map ", "JSON species search", "/density/map", [mapping])
-        addOccurrenceParams(densityMap)
-
-        //WMS GetCapabilities
-        def getCapabilities = addWebservice(biocache, "WMS GetCapabilities", "", "/ogc/ows", [mapping])
-        addOccurrenceParams(getCapabilities)
-
-        def getMetadata = addWebservice(biocache, "WMS GetMetadata", "Returns Marine community Profile XML", "/ogc/getMetadata", [mapping])
-        addOccurrenceParams(getMetadata)
-
-        def getFeatureInfo = addWebservice(biocache, "WMS GetFeatureInfo", "", "/ogc/getFeatureInfo", [mapping])
-        addOccurrenceParams(getFeatureInfo)
-
-        def getMap = addWebservice(biocache, "WMS GetMap", "", "/mapping/wms/reflect", [mapping])
-        addOccurrenceParams(getMap)
-
-        def legend = addWebservice(biocache, "WMS Legend", "", "/mapping/legend", [mapping])
-        addOccurrenceParams(legend)
-
-        //layers
-        def layersWS = addWebservice(layers, "Layers listing", "Get a list of all layers", "/layers", [geospatial])
-        def layersGridded = addWebservice(layers, "Gridded layers listing", "Get a list of all environmental/gridded layers", "/layers/grids", [geospatial])
-        def layersShapes = addWebservice(layers, "Shape layers listing", "Get a list of all  contextual layers (e.g. political boundaries)", "/layers/shapes", [geospatial])
-
-        //gazetteer
-
-        //endemism
-        def e1 = addWebservice(biocache, "Count endemic species", "Count of distinct endemic species within an area", "/explore/counts/endemic", [endemism])
-        addEndemismParams(e1)
-        def e2 = addWebservice(biocache, "Endemic Species list", "List endemic species within an area", "/explore/endemic/species", [endemism])
-        addEndemismParams(e2)
-        def e3 = addWebservice(biocache, "Endemic Species list (CSV)", "List endemic species within an area", "/explore/endemic/species.csv", [endemism])
-        addEndemismParams(e3)
-
-        //validation rules
-
-
-        //volunteer portal
-        addWebservice(bvp, "Expeditions", "Listing of expeditions in volunteer portal", "/ajax/expeditionInfo", [crowdsourcing])
-        addWebservice(bvp, "User contributions", "Listing of user contributions in volunteer portal", "/ajax/stats", [crowdsourcing])
-        addWebservice(bvp, "Transcriptions", "Number of transcriptions per month in volunteer portal", "/ajax/statsValidationsByMonth", [crowdsourcing])
-        addWebservice(bvp, "Validation", "Validations per month in volunteer portal", "/ajax/statsTranscriptionsByMonth", [crowdsourcing])
-        def taskInfo = addWebservice(bvp, "Task information", "Information for a specific task in volunteer portal", "/ajax/taskInfo", [crowdsourcing])
-        addParam(taskInfo, 'taskId', 'The identifier for the task', 'String')
-        addWebservice(bvp, "User report", "Validations per month in volunteer portal (requires privileges", "/ajax/userReport", [crowdsourcing])
-
-        //examples
-        addExample(occurrenceSearch, "Search for the records for the genus Macropus", [ [name:"q", value:"genus:Macropus"] ])
+        addFormats()
+//
+//        //apps
+//        def biocache = addApp("Biocache", "Occurrence & Mapping services", "http://biocache.ala.org.au/ws")
+//        def bvp = addApp("BVP", "Crowd sourcing", "http://volunteer.ala.org.au")
+//        def analysis = addApp("Analysis", "Spatial analysis","http://spatial.ala.org.au/alaspatial/ws")
+//        def layers = addApp("Layers", "Layer services including intersect","http://spatial.ala.org.au/ws")
+//        def bie = addApp("BIE", "Species names and profiles", "http://bie.ala.org.au/ws")
+//        def ecodata = addApp("Ecodata", "Occurrence & Mapping services", "http://ecodata.ala.org.au")
+//        def lists = addApp("Lists", "Species lists", "http://lists.ala.org.au/ws")
+//
+//        //categories
+//        def species = addCategory("Species profile", "Taxonomic name, concept lookups, autocomplete services ")
+//        def occurrence = addCategory("Occurrence", "Specimen & observation data searching")
+//        def geospatial = addCategory("Geospatial", "Including intersection services and gazetteer information")
+//        def mapping = addCategory("Mapping", "Creating maps with WMS services, static heat maps")
+//        def endemism = addCategory("Endemism", "Services for reports on endemism for an area")
+//        def duplicates = addCategory("Data duplication", "Reports on the details of a duplication detection")
+//        def parsing = addCategory("Parsing", "Services for parsing ad hoc occurrence data")
+//        def dq = addCategory("Data quality", "Services for reporting on data quality for records")
+//        def outliers = addCategory("Outlier detection", "Reporting the on outlier details for records")
+//        def literature = addCategory("Literature", "Biodiversity Heritage Library free text search")
+//        def collectionsMetadata = addCategory("Collections", "Collections metadata including taxonomic scope, attribution")
+//        def dataResourcesMetadata = addCategory("Data resources", "Data resource metadata including taxonomic scope, attribution")
+//        def dataProvidersMetadata = addCategory("Data providers", "Data provider metadata including taxonomic scope, attribution")
+//        def institutionMetadata = addCategory("Institution", "Institution metadata including taxonomic scope, attribution")
+//        def crowdsourcing = addCategory("Crowd sourcing", "Crowd sourcing information")
+//
+//        //species
+//        def speciesSearch = addWebservice(bie, "Species search", "JSON species search", "/search", [species])
+//        addSpeciesParams(speciesSearch)
+//        def speciesDownload = addWebservice(bie, "Species download", "JSON species download", "/species/download", [species])
+//        addSpeciesParams(speciesDownload)
+//
+//        //occurrence
+//        def occurrenceSearch = addWebservice(biocache, "Occurrence search", "JSON occurrence search", "/occurrences/search", [occurrence])
+//        addOccurrenceParams(occurrenceSearch)
+//
+//        def occurrenceDownload = addWebservice(biocache, "Occurrence download", "CSV occurrence download", "/occurrences/download",  [occurrence])
+//        addOccurrenceParams(occurrenceDownload)
+//
+//        //density map
+//        def densityMap = addWebservice(biocache, "Static heat map ", "JSON species search", "/density/map", [mapping])
+//        addOccurrenceParams(densityMap)
+//
+//        //WMS GetCapabilities
+//        def getCapabilities = addWebservice(biocache, "WMS GetCapabilities", "", "/ogc/ows", [mapping])
+//        addOccurrenceParams(getCapabilities)
+//
+//        def getMetadata = addWebservice(biocache, "WMS GetMetadata", "Returns Marine community Profile XML", "/ogc/getMetadata", [mapping])
+//        addOccurrenceParams(getMetadata)
+//
+//        def getFeatureInfo = addWebservice(biocache, "WMS GetFeatureInfo", "", "/ogc/getFeatureInfo", [mapping])
+//        addOccurrenceParams(getFeatureInfo)
+//
+//        def getMap = addWebservice(biocache, "WMS GetMap", "", "/mapping/wms/reflect", [mapping])
+//        addOccurrenceParams(getMap)
+//
+//        def legend = addWebservice(biocache, "WMS Legend", "", "/mapping/legend", [mapping])
+//        addOccurrenceParams(legend)
+//
+//        //layers
+//        def layersWS = addWebservice(layers, "Layers listing", "Get a list of all layers", "/layers", [geospatial])
+//        def layersGridded = addWebservice(layers, "Gridded layers listing", "Get a list of all environmental/gridded layers", "/layers/grids", [geospatial])
+//        def layersShapes = addWebservice(layers, "Shape layers listing", "Get a list of all  contextual layers (e.g. political boundaries)", "/layers/shapes", [geospatial])
+//
+//        //gazetteer
+//
+//        //endemism
+//        def e1 = addWebservice(biocache, "Count endemic species", "Count of distinct endemic species within an area", "/explore/counts/endemic", [endemism])
+//        addEndemismParams(e1)
+//        def e2 = addWebservice(biocache, "Endemic Species list", "List endemic species within an area", "/explore/endemic/species", [endemism])
+//        addEndemismParams(e2)
+//        def e3 = addWebservice(biocache, "Endemic Species list (CSV)", "List endemic species within an area", "/explore/endemic/species.csv", [endemism])
+//        addEndemismParams(e3)
+//
+//        //validation rules
+//
+//
+//        //volunteer portal
+//        addWebservice(bvp, "Expeditions", "Listing of expeditions in volunteer portal", "/ajax/expeditionInfo", [crowdsourcing])
+//        addWebservice(bvp, "User contributions", "Listing of user contributions in volunteer portal", "/ajax/stats", [crowdsourcing])
+//        addWebservice(bvp, "Transcriptions", "Number of transcriptions per month in volunteer portal", "/ajax/statsValidationsByMonth", [crowdsourcing])
+//        addWebservice(bvp, "Validation", "Validations per month in volunteer portal", "/ajax/statsTranscriptionsByMonth", [crowdsourcing])
+//        def taskInfo = addWebservice(bvp, "Task information", "Information for a specific task in volunteer portal", "/ajax/taskInfo", [crowdsourcing])
+//        addParam(taskInfo, 'taskId', 'The identifier for the task', 'String')
+//        addWebservice(bvp, "User report", "Validations per month in volunteer portal (requires privileges", "/ajax/userReport", [crowdsourcing])
+//
+//        //examples
+//        addExample(occurrenceSearch, "Search for the records for the genus Macropus", [ [name:"q", value:"genus:Macropus"] ])
     }
 
     def destroy = {
