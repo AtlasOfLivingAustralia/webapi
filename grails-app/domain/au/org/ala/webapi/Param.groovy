@@ -21,7 +21,7 @@ class Param {
 
     static belongsTo = [webService:WebService]
 
-    static paramTypes = ['String','Integer','Date', 'Double']
+    static paramTypes = ['String','Integer','Date', 'Double','Boolean']
 
     static constraints = {
         webService(nullable:false)
