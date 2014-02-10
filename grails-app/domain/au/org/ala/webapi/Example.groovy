@@ -23,7 +23,7 @@ class Example {
         } else {
             def paramString = ""
 
-            if(this.webService.httpMethod == "GET"){
+            if(this.webService.httpMethod.contains("GET")){
                 if(params){
                    params.eachWithIndex { elem, idx ->
                      if(idx == 0){
