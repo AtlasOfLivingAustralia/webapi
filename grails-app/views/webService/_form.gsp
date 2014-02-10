@@ -33,14 +33,14 @@
 	<label for="description">
 		<g:message code="webService.description.label" default="Description (use markdown if required)" />
 	</label>
-	<g:textArea name="description" cols="40" rows="5" maxlength="2000" class="input-xxlarge span12" value="${webServiceInstance?.description}"/>
+	<g:textArea name="description" cols="40" rows="5" maxlength="${java.lang.Integer.MAX_VALUE}" class="input-xxlarge span12" value="${webServiceInstance?.description}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: webServiceInstance, field: 'exampleOutput', 'error')} ">
 	<label for="exampleOutput">
 		<g:message code="webService.exampleOutput.label" default="Example output (use markdown if required)" />
 	</label>
-	<g:textArea name="exampleOutput" cols="40" rows="5" maxlength="2000" class="input-xxlarge span12" value="${webServiceInstance?.exampleOutput}"/>
+	<g:textArea name="exampleOutput" cols="40" rows="5" maxlength="${java.lang.Integer.MAX_VALUE}" class="input-xxlarge span12" value="${webServiceInstance?.exampleOutput}"/>
 </div>
 
 </div>

@@ -57,10 +57,10 @@ class WebService {
 
     static constraints = {
         name(nullable:false)
-        description(nullable:false, maxSize: 2000)
+        description(nullable:false, maxSize: Integer.MAX_VALUE)
         url(nullable:false)
         deprecated(nullable:false)
-        exampleOutput(nullable:false, maxSize: 2000)
+        exampleOutput(nullable:false, maxSize: Integer.MAX_VALUE)
     }
 
     static mapping = {

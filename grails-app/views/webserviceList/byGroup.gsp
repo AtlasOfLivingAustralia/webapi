@@ -143,7 +143,7 @@
 
                             <g:if test="${webService.exampleOutput}">
                                 <div class="exampleOutput">
-                                    <h4>Example ouput</h4>
+                                    <h4>Example output</h4>
                                     <pre><code>${webService.exampleOutput}</code></pre>
                                 </div>
                             </g:if>
