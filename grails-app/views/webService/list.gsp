@@ -37,6 +37,8 @@
 						<g:sortableColumn property="deprecated" title="${message(code: 'webService.deprecated.label', default: 'Deprecated')}" />
 					
 						<g:sortableColumn property="outputFormat" title="${message(code: 'webService.outputFormat.label', default: 'Output Format')}" />
+
+                        <th>Edit</th>
 					
 					</tr>
 				</thead>
@@ -57,6 +59,12 @@
 						<td><g:formatBoolean boolean="${webServiceInstance.deprecated}" /></td>
 					
 						<td>${fieldValue(bean: webServiceInstance, field: "outputFormat")}</td>
+
+                        <td>
+                            <g:link class="btn btn-mini" controller="webService" action="edit" id="${webServiceInstance.id}">Edit</g:link>
+                            <g:link class="btn btn-mini"  controller="example" action="createForWS" id="${webServiceInstance.id}"><i class="icon-plus"></i>example</g:link>
+                            <g:link class="btn btn-mini"  controller="webService" action="create" id="${webServiceInstance.id}">Copy</g:link>
+                        </td>
 					
 					</tr>
 				</g:each>

@@ -17,21 +17,15 @@
 			</ul>
 		</div>
 		<div id="show-webService" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+			<h1>${webServiceInstance?.name}</h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
+
+            <div class="row-fluid">
+            <span class="span4">
 			<ol class="property-list webService">
-			
-				<g:if test="${webServiceInstance?.name}">
-				<li class="fieldcontain">
-					<span id="name-label" class="property-label"><g:message code="webService.name.label" default="Name" /></span>
-					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${webServiceInstance}" field="name"/></span>
-					
-				</li>
-				</g:if>
-			
+
 				<g:if test="${webServiceInstance?.description}">
 				<li class="fieldcontain">
 					<span id="description-label" class="property-label"><g:message code="webService.description.label" default="Description" /></span>
@@ -125,38 +119,44 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${webServiceInstance?.getSortedParams()}">
-                <h4>Parameters</h4>
+			</ol>
+            </span>
+            <span class="span8">
+                <g:if test="${webServiceInstance?.getSortedParams()}">
+                    <h4>Parameters</h4>
 
-				<table class="table table-bordered table-striped">
-                    <thead>
+                    <table class="table table-bordered table-striped">
+                        <thead>
                         <th>Parameter name</th>
                         <th>Data type</th>
                         <th>Properties</th>
                         <th>Description</th>
-                    </thead>
-                    <g:each in="${webServiceInstance.getSortedParams()}" var="p">
-                    <tr>
-                       <td>${p.name}</td>
-                       <td>${p.type}</td>
-                       <td>
-                           Mandatory: ${p.mandatory?'YES':'no'} <br/>
-                           Deprecated: ${p.deprecated?'YES':'no'} <br/>
-                           Included in title: ${p.includeInTitle?'YES':'no'}
-                       </td>
-                       <td><markdown:renderHtml>${p.description}</markdown:renderHtml>
-                       </td>
-                    </tr>
-                    </g:each>
-				</table>
-				</g:if>
-			</ol>
+                        </thead>
+                        <g:each in="${webServiceInstance.getSortedParams()}" var="p">
+                            <tr>
+                                <td>${p.name}</td>
+                                <td>${p.type}</td>
+                                <td>
+                                    Mandatory:${p.mandatory?'YES':'no'}<br/>
+                                    Deprecated:${p.deprecated?'YES':'no'}<br/>
+                                    In title:${p.includeInTitle?'YES':'no'}
+                                </td>
+                                <td><markdown:renderHtml>${p.description}</markdown:renderHtml>
+                                </td>
+                            </tr>
+                        </g:each>
+                    </table>
+                </g:if>
+            </span>
+
+            </div>
+
 			<g:form>
 				<fieldset class="buttons">
 					<g:hiddenField name="id" value="${webServiceInstance?.id}" />
 					<g:link class="edit" action="edit" id="${webServiceInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    <g:link class="btn" controller="example" action="createForWS" id="${webServiceInstance.id}">Create example</g:link>
 				</fieldset>
 			</g:form>
 		</div>

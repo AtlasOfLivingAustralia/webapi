@@ -46,12 +46,13 @@ class Example {
     static constraints = {
         name(nullable:false)
         description(nullable:false)
-        urlPath(nullable:true)
+        urlPath(nullable:true, maxSize: Integer.MAX_VALUE)
         onlineViewer(nullable:true)
     }
 
     static mapping = {
       description type: 'text'
+      urlPath type: 'text'
       params cascade: "all-delete-orphan"
     }
 }

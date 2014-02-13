@@ -68,7 +68,7 @@
 		<g:message code="webService.outputFormat.label" default="Output Format" />
 		
 	</label>
-	<g:select name="outputFormat" from="${Format.list()}" value="${webServiceInstance?.outputFormat}" valueMessagePrefix="webService.outputFormat" noSelection="['': '']"/>
+	<g:select name="outputFormat" from="${Format.stringList()}" value="${webServiceInstance?.outputFormat}" valueMessagePrefix="webService.outputFormat" noSelection="['': '']"/>
 </div>
 
 

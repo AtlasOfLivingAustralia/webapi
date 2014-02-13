@@ -72,62 +72,57 @@
                                </span>
                            </g:if>
 
+                                <div class="row-fluid" style="margin-bottom:10px;">
 
-                            <div class="row-fluid" style="margin-bottom:10px;">
-
-                                <div class="webserviceName webServiceShowDetails ">
-                                    <span>${webService.name}</span>
-                                    <span class="separator hidden-phone hidden-tablet"> - </span>
-                                    <span class="urlLarge hidden-phone hidden-tablet">${webService.getQueryUrl()}</span>
-                                    <span class="urlSmall separator visible-phone visible-tablet">${webService.getQueryUrl()}</span>
+                                    <div class="webserviceName webServiceShowDetails">
+                                        <span><a href="#ws${webService.id}" id="ws${webService.id}" name="ws${webService.id}" style="text-decoration: none; color:black;">${webService.name}</a></span>
+                                        <span class="separator hidden-phone hidden-tablet"> - </span>
+                                        <span class="urlLarge hidden-phone hidden-tablet">${webService.getQueryUrl()}</span>
+                                        <span class="urlSmall separator visible-phone visible-tablet">${webService.getQueryUrl()}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row-fluid">
+                                <div class="row-fluid">
 
-                                <span class="httpMethods webServiceShowDetails hidden-phone">
-                                    <g:each in="${webService.httpMethod}" var="httpMethod">
-                                    <span class="httpMethod httpMethod-${httpMethod}">
-                                        <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${httpMethod} request">
-                                            ${httpMethod}
-                                        </a>
+                                    <span class="httpMethods webServiceShowDetails hidden-phone">
+                                        <g:each in="${webService.httpMethod}" var="httpMethod">
+                                        <span class="httpMethod httpMethod-${httpMethod}">
+                                            <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${httpMethod} request">
+                                                ${httpMethod}
+                                            </a>
+                                        </span>
+                                        </g:each>
                                     </span>
-                                    </g:each>
-                                </span>
 
-                                <span class="outputLabels webServiceShowDetails hidden-phone">
-                                    <g:each in="${webService.outputFormat}" var="outputFormat">
-                                    <span class="outputFormat">
-                                        <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${outputFormat.toUpperCase()} format">
-                                        ${outputFormat?.toUpperCase()}
-                                        </a>
+                                    <span class="outputLabels webServiceShowDetails hidden-phone">
+                                        <g:each in="${webService.outputFormat}" var="outputFormat">
+                                        <span class="outputFormat">
+                                            <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${outputFormat.toUpperCase()} format">
+                                            ${outputFormat?.toUpperCase()}
+                                            </a>
+                                        </span>
+                                        </g:each>
                                     </span>
-                                    </g:each>
-                                </span>
 
-
-                                <span class="visible-phone">
-                                    <ul class="inline">
-                                    <g:each in="${webService.httpMethod}" var="httpMethod">
-                                        <li class="label label-http-${httpMethod}">${httpMethod}</li>
-                                    </g:each>
-                                    <g:each in="${webService.outputFormat}" var="outputFormat">
-                                        <li class="label">${outputFormat?.toUpperCase()}</li>
-                                    </g:each>
-                                   </ul>
-                                </span>
-
-
-                                <g:if test="${webService.deprecated}">
-                                    <span class="deprecatedLabel webServiceShowDetails">
-                                        <span>DEPRECATED</span>
+                                    <span class="visible-phone">
+                                        <ul class="inline">
+                                        <g:each in="${webService.httpMethod}" var="httpMethod">
+                                            <li class="label label-http-${httpMethod}">${httpMethod}</li>
+                                        </g:each>
+                                        <g:each in="${webService.outputFormat}" var="outputFormat">
+                                            <li class="label">${outputFormat?.toUpperCase()}</li>
+                                        </g:each>
+                                       </ul>
                                     </span>
-                                </g:if>
-                            </div>
 
-                            <g:set var="returnTo" value="/"/>
+                                    <g:if test="${webService.deprecated}">
+                                        <span class="deprecatedLabel webServiceShowDetails">
+                                            <span>DEPRECATED</span>
+                                        </span>
+                                    </g:if>
+                                </div>
 
-
+                                <g:set var="returnTo" value="/#ws${webService.id}"/>
 
                         </h4>
 
@@ -208,9 +203,12 @@ $(function() {
         // Animation complete.
       });
     });
-
     $('.wsLabel').tooltip({});
-
+//    if(window.location.hash){
+//        var hashValue = window.location.hash.substring(1);
+//        alert('hash: ' + hashValue);
+//        $(hashValue).parent().parent().children( ".webServiceDetails" ).toggle( "slow", function() {});
+//    }
  });
 </r:script>
 

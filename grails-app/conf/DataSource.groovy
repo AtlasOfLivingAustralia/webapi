@@ -19,7 +19,18 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "update"
+            dbCreate = "none"
+            testOnBorrow = true
+            properties {
+                maxActive = 10
+                maxIdle = 5
+                minIdle = 5
+                initialSize = 5
+                minEvictableIdleTimeMillis = 60000
+                timeBetweenEvictionRunsMillis = 60000
+                maxWait = 10000
+                validationQuery = "select max(id) from web_service"
+            }
         }
     }
 }

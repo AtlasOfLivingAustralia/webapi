@@ -72,6 +72,17 @@ a.wsLabel:hover {
    margin-right:5px;
 }
 
+.deprecatedLabel {
+    background-color: #cc3300;
+    color: #FFFFFF;
+    padding:5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-right:5px;
+}
+
+
 .outputFormat {
    background-color: grey;
    color: #FFFFFF;

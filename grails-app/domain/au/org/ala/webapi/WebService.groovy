@@ -5,10 +5,8 @@ class WebService {
     String name
     String description = "."
     String url = "" // excluding the baseUrl
-//    String httpMethod = "GET"
     Boolean deprecated = false
     String exampleOutput = ""
-
     Date dateCreated
     Date lastUpdated
 

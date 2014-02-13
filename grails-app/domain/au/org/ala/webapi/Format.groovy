@@ -10,4 +10,10 @@ class Format {
 
     static constraints = {
     }
+
+    static def stringList(){
+        def list = []
+        Format.list().each { list << it.name}
+        list
+    }
 }
