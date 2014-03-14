@@ -44,6 +44,10 @@ class WebService {
         WebService.withCriteria{
             categories {
                 eq('id', category.id)
+//                fetchMode 'params', FetchMode.JOIN
+//                fetchMode 'outputFormat', FetchMode.JOIN
+//                fetchMode 'httpMethod', FetchMode.JOIN
+//                fetchMode 'examples', FetchMode.JOIN
             }
         }
     }

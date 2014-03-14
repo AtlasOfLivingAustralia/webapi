@@ -3,20 +3,23 @@ package au.org.ala.webapi
 class WebserviceListController {
 
     def authService
+    def listCacheService
+    def grailsCacheAdminService
 
     def byCategory() {
+      render(view: "byGroup", model: [wsByGroup: listCacheService.byCategory(), byCategory:true, isEditor: authService.userInRole("ROLE_API_EDITOR")])
+    }
 
-      def categories = au.org.ala.webapi.Category.list()
+    def clearCache(){
+        // clear the cache used by the blocks tag…
+        grailsCacheAdminService.clearBlocksCache()
 
-      def wsByCategory = [:]
+        // clear the cache used by the render tag…
+        grailsCacheAdminService.clearTemplatesCache()
 
-      categories.each { category ->
-          def webservices = WebService.getByCategory(category)
-          wsByCategory[category] = webservices
-      }
+        listCacheService.clearCache()
 
-      //[wsByCategory: wsByCategory]
-      render(view: "byGroup", model: [wsByGroup: wsByCategory, byCategory:true, isEditor: authService.userInRole("ROLE_API_EDITOR")])
+        redirect( controller: 'webserviceList', action:'byCategory')
     }
 
     def byApp() {
@@ -29,7 +32,6 @@ class WebserviceListController {
           wsByApp[app] = app.webservices
       }
 
-//      [wsByApp: wsByApp]
       render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
 

@@ -6,5 +6,5 @@
     <g:textArea name="paramValue" rows="1" class="input-xxlarge" value="${param?.value}"/>
 </td>
 <td>
-    <a class="deleteParam btn btn-danger" href="javascript:void(0);"><i class="icon-minus icon-white"></i>&nbsp;Delete</a>
+    <a class="deleteParam btn btn-danger" href="javascript:void(0);"><i class="icon-minus icon-white"></i><span class="hidden-phone">&nbsp;Delete</span></a>
 </td>

@@ -7,8 +7,7 @@
         <r:require modules="webapi,tooltip"/>
 	</head>
 	<body>
-		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-
+        <a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <g:if test="${isEditor}">
             <div class="pull-right">
                 <ul class="nav nav-pills">
@@ -26,6 +25,7 @@
                         <li><g:link controller="webService">Webservices</g:link></li>
                         <li><g:link controller="category">Categories</g:link></li>
                         <li><g:link controller="example">Examples</g:link></li>
+                        <li><g:link controller="webserviceList" action="clearCache">Clear page cache</g:link></li>
                     </ul>
                   </li>
                 </ul>
@@ -35,8 +35,8 @@
 		<div  role="main">
 			<h1>Web service API</h1>
             <p class="lead">
-                The (nearly) complete listing of the web services for the ALA. Send complements/issues to support@ala.org.au.
-                <br/>
+                <span class="hidden-phone">The (nearly) complete listing of the web services for the ALA. Send complements/issues to support@ala.org.au. <br/></span>
+
                 <g:if test="${byCategory}">
                     The webservices are listed by category. To list by application, <g:link action="byApp">click here</g:link>.
                 </g:if>
@@ -44,7 +44,7 @@
                     The webservices are listed by application. To list by category, <g:link action="byCategory">click here</g:link>.
                 </g:else>
             </p>
-
+            <cache:block>
             <g:each in="${wsByGroup.keySet()}" var="group">
 
                 <g:if test="${wsByGroup[group]}">
@@ -62,13 +62,24 @@
 
                            <g:if test="${isEditor}">
                                <span class="pull-right" style="padding-right:10px;">
-                                   <g:link controller="webService" action="edit" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">Edit</g:link>
-                                   <g:link controller="example" action="createForWS" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small">
-                                       Add example</g:link>
+                                   <g:link controller="webService" action="edit" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small"
+                                           title="Edit the definition of this webservice"
+                                   >
+                                       <i class="icon-edit"></i>
+                                        <span class="hidden-phone">Edit</span>
+                                   </g:link>
+                                   <g:link controller="example" action="createForWS" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small"
+                                           title="Add an example usage of this webservice"
+                                   >
+                                       <i class="icon-plus"></i>
+                                       <span class="hidden-phone">Example</span>
+                                   </g:link>
                                    <g:link controller="webService" action="create" id="${webService.id}"
                                        title="Create a webservice based on this webservice"
-                                           params="[returnTo:returnTo]" class="btn btn-small hidden-phone">
-                                       Create copy</g:link>
+                                           params="[returnTo:returnTo]" class="btn btn-small">
+                                       <i class="icon-cog"></i>
+                                       <span class="hidden-phone">Copy</span>
+                                   </g:link>
                                </span>
                            </g:if>
 
@@ -78,30 +89,40 @@
                                         <span><a href="#ws${webService.id}" id="ws${webService.id}" name="ws${webService.id}" style="text-decoration: none; color:black;">${webService.name}</a></span>
                                         <span class="separator hidden-phone hidden-tablet"> - </span>
                                         <span class="urlLarge hidden-phone hidden-tablet">${webService.getQueryUrl()}</span>
-                                        <span class="urlSmall separator visible-phone visible-tablet">${webService.getQueryUrl()}</span>
+                                        <span class="hidden-phone">&nbsp;</span>
+                                        <span class="urlSmall visible-phone visible-tablet">${webService.getQueryUrl()}</span>
                                     </div>
                                 </div>
 
                                 <div class="row-fluid">
 
-                                    <span class="httpMethods webServiceShowDetails hidden-phone">
-                                        <g:each in="${webService.httpMethod}" var="httpMethod">
-                                        <span class="httpMethod httpMethod-${httpMethod}">
-                                            <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${httpMethod} request">
-                                                ${httpMethod}
-                                            </a>
+                                    <span class="hidden-phone">
+                                        <span class="httpMethods webServiceShowDetails">
+                                            <g:each in="${webService.httpMethod}" var="httpMethod">
+                                            <span class="httpMethod httpMethod-${httpMethod}">
+                                                <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service supports HTTP ${httpMethod} request">
+                                                    ${httpMethod}
+                                                </a>
+                                            </span>
+                                            </g:each>
                                         </span>
-                                        </g:each>
-                                    </span>
 
-                                    <span class="outputLabels webServiceShowDetails hidden-phone">
-                                        <g:each in="${webService.outputFormat}" var="outputFormat">
-                                        <span class="outputFormat">
-                                            <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${outputFormat.toUpperCase()} format">
-                                            ${outputFormat?.toUpperCase()}
-                                            </a>
+                                        <span class="outputLabels webServiceShowDetails">
+                                            <g:each in="${webService.outputFormat}" var="outputFormat">
+                                            <span class="outputFormat">
+                                                <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service returns data in ${outputFormat.toUpperCase()} format">
+                                                ${outputFormat?.toUpperCase()}
+                                                </a>
+                                            </span>
+                                            </g:each>
+                                            <g:if test="${webService.deprecated}">
+                                                <span class="deprecatedLabel webServiceShowDetails">
+                                                    <a href="#" class="wsLabel" data-toggle="tooltip" data-placement="top" title="" data-original-title="This service is deprecated and may be removed in future versions">
+                                                    DEPRECATED
+                                                   </a>
+                                                </span>
+                                            </g:if>
                                         </span>
-                                        </g:each>
                                     </span>
 
                                     <span class="visible-phone">
@@ -112,14 +133,11 @@
                                         <g:each in="${webService.outputFormat}" var="outputFormat">
                                             <li class="label">${outputFormat?.toUpperCase()}</li>
                                         </g:each>
-                                       </ul>
+                                        <g:if test="${webService.deprecated}">
+                                            <li class="label label-important">DEPRECATED</li>
+                                        </g:if>
+                                        </ul>
                                     </span>
-
-                                    <g:if test="${webService.deprecated}">
-                                        <span class="deprecatedLabel webServiceShowDetails">
-                                            <span>DEPRECATED</span>
-                                        </span>
-                                    </g:if>
                                 </div>
 
                                 <g:set var="returnTo" value="/#ws${webService.id}"/>
@@ -130,7 +148,7 @@
                             <p><markdown:renderHtml>${webService.description}</markdown:renderHtml></p>
 
                             <g:if test="${webService.params}">
-                                <table class="table table-bordered table-striped  table-condensed">
+                                <table class="table table-bordered table-striped table-condensed">
                                 <g:each in="${webService.getSortedParams()}" var="param">
                                    <tr>
                                        <td>${param.name}
@@ -192,6 +210,7 @@
                 </ul>
                 </g:if>
             </g:each>
+            </cache:block>
 		</div>
 	</body>
 <r:script>

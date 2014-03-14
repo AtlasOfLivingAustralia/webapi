@@ -51,7 +51,7 @@
 		<g:message code="webService.httpMethod.label" default="Http Method" />
 		
 	</label>
-	<g:select name="httpMethod" from="${webServiceInstance.httpMethods}" value="${webServiceInstance?.httpMethod}" valueMessagePrefix="webService.httpMethod" noSelection="['': '']"/>
+	<g:select name="httpMethod"  multiple="true" from="${webServiceInstance.httpMethods}" value="${webServiceInstance?.httpMethod}" valueMessagePrefix="webService.httpMethod" noSelection="['': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: webServiceInstance, field: 'deprecated', 'error')} ">
@@ -68,7 +68,7 @@
 		<g:message code="webService.outputFormat.label" default="Output Format" />
 		
 	</label>
-	<g:select name="outputFormat" from="${Format.stringList()}" value="${webServiceInstance?.outputFormat}" valueMessagePrefix="webService.outputFormat" noSelection="['': '']"/>
+	<g:select name="outputFormat" multiple="true" from="${Format.stringList()}" value="${webServiceInstance?.outputFormat}" valueMessagePrefix="webService.outputFormat" noSelection="['': '']"/>
 </div>
 
 

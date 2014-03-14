@@ -1,6 +1,7 @@
 <td class="paramName">
-    <g:hiddenField name="paramId" value="${param?.id}" class="input-small"/>
-    <g:textField name="paramName" value="${param?.name}"  class="input-small"/><br/>
+    <g:hiddenField name="paramId" value="${param?.id}" />
+    <g:textField name="paramName" value="${param?.name}" class="input-small"/>
+    <br/>
 </td>
 <td class="paramType">
     <g:select name="paramType" class="input-small" from="${au.org.ala.webapi.Param.paramTypes}" value="${param?.type}" />
@@ -28,7 +29,7 @@
         Include in title
     </div>
 </td>
-<td class="paramDescription ">
+<td class="paramDescription">
     <g:textArea name="paramDescription" rows="6" class="input-xxlarge" value="${param?.description}"/>
 </td>
-<td><a class="deleteParam btn btn-danger" href="javascript:void(0);"><i class="icon-minus icon-white"></i>&nbsp;Delete</a></td>
+<td><a class="deleteParam btn btn-danger" href="javascript:void(0);"><i class="icon-minus icon-white"></i><span class="hidden-phone">&nbsp;Delete</span></td>
