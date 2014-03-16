@@ -5,11 +5,15 @@
 		<meta name="layout" content="main"/>
 		<title>Web service API</title>
         <r:require modules="webapi,tooltip"/>
+        <g:if test="${!isEditor}">
+            <style type="text/css">
+            .editorFunctions { display:none; }
+            </style>
+        </g:if>
 	</head>
 	<body>
         <a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <g:if test="${isEditor}">
-            <div class="pull-right">
+        <div class="pull-right editorFunctions">
                 <ul class="nav nav-pills">
                   <li class="dropdown">
                     <a class="dropdown-toggle"
@@ -30,7 +34,6 @@
                   </li>
                 </ul>
             </div>
-        </g:if>
 
 		<div  role="main">
 			<h1>Web service API</h1>
@@ -59,8 +62,7 @@
                 <g:each in="${wsByGroup[group]}" var="webService">
                     <li id="webService-${webService.id}" class="webService">
                         <h4>
-
-                           <g:if test="${isEditor}">
+                           <span class="editorFunctions">
                                <span class="pull-right" style="padding-right:10px;">
                                    <g:link controller="webService" action="edit" id="${webService.id}" params="[returnTo:returnTo]" class="btn btn-small"
                                            title="Edit the definition of this webservice"
@@ -81,7 +83,7 @@
                                        <span class="hidden-phone">Copy</span>
                                    </g:link>
                                </span>
-                           </g:if>
+                           </span>
 
                                 <div class="row-fluid" style="margin-bottom:10px;">
 
@@ -141,7 +143,6 @@
                                 </div>
 
                                 <g:set var="returnTo" value="/#ws${webService.id}"/>
-
                         </h4>
 
                         <div id="webService-details-${webService.id}" class="webServiceDetails hide">
@@ -179,7 +180,7 @@
                                     <ul>
                                     <g:each in="${webService.examples}" var="example">
                                        <li>
-                                           <span class="pull-right" style="padding-right:10px;">
+                                           <span class="pull-right editorFunctions" style="padding-right:10px;">
                                                <g:link controller="example" action="edit" id="${example.id}" params="[returnTo:returnTo]" class="btn btn-small">Edit</g:link>
                                            </span>
 
@@ -223,11 +224,6 @@ $(function() {
       });
     });
     $('.wsLabel').tooltip({});
-//    if(window.location.hash){
-//        var hashValue = window.location.hash.substring(1);
-//        alert('hash: ' + hashValue);
-//        $(hashValue).parent().parent().children( ".webServiceDetails" ).toggle( "slow", function() {});
-//    }
  });
 </r:script>
 

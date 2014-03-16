@@ -29,7 +29,7 @@ environments {
                 minEvictableIdleTimeMillis = 60000
                 timeBetweenEvictionRunsMillis = 60000
                 maxWait = 10000
-                validationQuery = "select 1"
+                validationQuery = "select max(id) from category"
             }
         }
     }
