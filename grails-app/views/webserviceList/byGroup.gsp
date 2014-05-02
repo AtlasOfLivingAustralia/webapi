@@ -29,6 +29,8 @@
                         <li><g:link controller="webService">Webservices</g:link></li>
                         <li><g:link controller="category">Categories</g:link></li>
                         <li><g:link controller="example">Examples</g:link></li>
+                        <li><g:link controller="example" action="lastRuns">Latest heart beats</g:link> </li>
+                        <li><g:link controller="webserviceList" action="sendHeartbeat">Send heart beat</g:link></li>
                         <li><g:link controller="webserviceList" action="clearCache">Clear page cache</g:link></li>
                     </ul>
                   </li>
@@ -191,6 +193,10 @@
                                                <g:if test="${example.onlineViewer}">
                                                    <br/>
                                                    Online demo: <a href="${example.onlineViewer}">${example.onlineViewer}</a>
+                                               </g:if>
+                                               <br/>
+                                               <g:if test='${example.machineCallable && webService.httpMethod.contains("GET")}'>
+                                                   <a href="${createLink(controller: 'example', action: 'graph', id: example.id)}">History</a>
                                                </g:if>
                                             </p>
                                        </li>

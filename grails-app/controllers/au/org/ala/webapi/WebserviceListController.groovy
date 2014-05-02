@@ -45,4 +45,14 @@ class WebserviceListController {
 
       render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
+
+    def sendHeartbeat() {
+        HeartbeatJob.triggerNow()
+        flash.message = "Heartbeat running in background, may take a few minutes for results to show up"
+        if(params.returnTo){
+            redirect(url: params.returnTo)
+        } else {
+            redirect(action:'byCategory')
+        }
+    }
 }

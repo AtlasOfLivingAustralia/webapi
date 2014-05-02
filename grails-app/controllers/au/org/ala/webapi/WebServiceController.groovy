@@ -6,6 +6,7 @@ class WebServiceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def combinedCacheService
 
     def index() {
         redirect(action: "list", params: params)
@@ -44,8 +45,10 @@ class WebServiceController {
                ])
             }
             clone.params = clonedParams
+            combinedCacheService.clearCache()
             [webServiceInstance: clone]
         } else {
+            combinedCacheService.clearCache()
             [webServiceInstance: new WebService(params)]
         }
     }
@@ -59,6 +62,7 @@ class WebServiceController {
 
         storeParams(webServiceInstance, params)
 
+        combinedCacheService.clearCache()
         flash.message = message(code: 'default.created.message', args: [message(code: 'webService.label', default: 'WebService'), webServiceInstance.id])
         if(params.returnTo){
             redirect(url: params.returnTo)
@@ -169,6 +173,7 @@ class WebServiceController {
 
          //add new
 
+        combinedCacheService.clearCache()
         flash.message = message(code: 'default.updated.message', args: [message(code: 'webService.label', default: 'WebService'), webServiceInstance.id])
         if(params.returnTo){
             redirect(url: params.returnTo)
@@ -220,6 +225,7 @@ class WebServiceController {
 
         try {
             webServiceInstance.delete(flush: true)
+            combinedCacheService.clearCache()
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'webService.label', default: 'WebService'), id])
             redirect(action: "list")
         }
@@ -228,4 +234,5 @@ class WebServiceController {
             redirect(action: "show", id: id)
         }
     }
+
 }

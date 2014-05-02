@@ -52,7 +52,6 @@ class WebService {
         }
     }
 
-
     static hasMany = [outputFormat:String, httpMethod: String, params:Param, examples:Example, categories:Category]
 
     static httpMethods = ['GET','POST','PUT','DELETE','HEAD']

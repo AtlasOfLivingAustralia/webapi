@@ -42,6 +42,8 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         runtime 'mysql:mysql-connector-java:5.1.22'
+        compile 'com.google.guava:guava:16.0.1'
+        test 'org.spockframework:spock-grails-support:0.7-groovy-2.0'
     }
 
     plugins {
@@ -53,5 +55,14 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.3.2"
         compile ':cache:1.1.1'
         runtime ":ala-web-theme:0.2.2"
+        compile ":quartz:1.0.1"
+        compile ":mail:1.0.4"
+        compile ":d3:3.4.1.0"
+        compile ":joda-time:1.4"
+        compile ":pretty-time:2.1.3.Final-1.0.1"
+        runtime ':database-migration:1.3.8'
+        test(":spock:0.7") {
+                    exclude "spock-grails-support"
+                }
     }
 }

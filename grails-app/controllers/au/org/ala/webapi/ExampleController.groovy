@@ -6,6 +6,9 @@ class ExampleController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def exampleService
+    def combinedCacheService
+
     def index() {
         redirect(action: "list", params: params)
     }
@@ -31,6 +34,7 @@ class ExampleController {
         example.params = exampleParams
         example.webService = webService
 
+        combinedCacheService.clearCache()
         render(view:'create', model:[exampleInstance: example, webService:webService])
     }
 
@@ -45,6 +49,7 @@ class ExampleController {
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'example.label', default: 'Example'), exampleInstance.id])
 
+        combinedCacheService.clearCache()
         if(params.returnTo){
             redirect(url: params.returnTo)
         } else {
@@ -59,7 +64,6 @@ class ExampleController {
             redirect(action: "list")
             return
         }
-
         [exampleInstance: exampleInstance]
     }
 
@@ -124,6 +128,8 @@ class ExampleController {
         //add new
         storeParams(exampleInstance, params)
 
+
+        combinedCacheService.clearCache()
         flash.message = message(code: 'default.updated.message', args: [message(code: 'example.label', default: 'Example'), exampleInstance.id])
         if(params.returnTo){
             redirect(url: params.returnTo)
@@ -142,6 +148,7 @@ class ExampleController {
 
         try {
             exampleInstance.delete(flush: true)
+            combinedCacheService.clearCache()
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'example.label', default: 'Example'), id])
             redirect(action: "list")
         }
@@ -149,5 +156,77 @@ class ExampleController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'example.label', default: 'Example'), id])
             redirect(action: "show", id: id)
         }
+    }
+
+    def graph(Long id) {
+
+        def example = Example.get(id)
+        if (!example) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'example.label', default: 'Example'), id])
+            redirect(action: "list")
+            return
+        }
+        def now = new Date()
+        def then = now - 3
+        def sortedRuns = ExampleRun
+                .executeQuery("select new map(er.class as clazz, er.id as id, er.start as start, er.duration as duration, er.url as url, er.responseCode as responseCode, er.exceptionClass as exceptionClass, er.message as message) from ExampleRun er where er.example.id = :id and start > :start order by er.start", ["id": id, "start" : then.time])
+
+        sortedRuns.each {
+            it.start = new Date(it.start)
+        }
+
+        def max = sortedRuns.max {it.duration}
+        def min = sortedRuns.min {it.duration}
+        ["exampleInstance" : example, "sortedRuns" : sortedRuns, "min" : min, "max" : max]
+    }
+
+    /** list all machine runnable examples and web services with no examples */
+    def lastRuns() {
+        def services = Timer.time {
+            WebService.executeQuery("from WebService ws where 'GET' in elements(ws.httpMethod) and true not in (select e.machineCallable from Example as e where e.webService.id = ws.id) order by name")
+        }
+
+        def sort = params.sort in ['example.name', 'responseCode', 'start', 'duration'] ? params.sort : 'example.name'
+        def order = params.order in ['asc', 'desc'] ? params.order : 'asc'
+
+        def latestRuns = Timer.time {
+            ExampleRun.executeQuery("select new map(er.id as id, er.example as example, er.responseCode as responseCode, er.message as message, er.duration as duration, er.start as start) from ExampleRun as er where (er.example.id, er.start) in (select er2.example.id, max(er2.start) from ExampleRun as er2 group by er2.example.id) order by er.$sort $order")
+        }
+
+        latestRuns.value.each {
+            it.start = new Date(it.start)
+        }
+
+        [services: services, latestRuns: latestRuns]
+    }
+
+    def callExample(Long id) {
+        final example = show(id).exampleInstance
+        if (!example) return
+
+        final run = exampleService.callExample(example)
+        exampleService.saveOrLogValidationErrors(run)
+        final message
+        switch(run) {
+            case ExampleRunResponse:
+                message = "with response code ${run.responseCode} and content type ${run.contentType}"
+                break
+            case ExampleRunFailure:
+                message = "with exception ${run.exceptionClass} and message ${run.message}"
+                break
+            default:
+                message =""
+                break
+        }
+        flash.message = "${example.name} called in ${run.end - run.start}ms ${message}"
+        redirect(action: 'lastRuns')
+        return
+    }
+
+    def brokenServicesEmail() {
+        final now = new Date()
+        final then = now - 1
+        final brokenServices = exampleService.findBrokenWebServices(then, now, 2)
+        render(view:"/digestmail/brokenServices", model:[examples: brokenServices])
     }
 }

@@ -1,6 +1,7 @@
 /******************************************************************************\
  *  CONFIG MANAGEMENT
 \******************************************************************************/
+
 def appName = 'webapi'
 def ENV_NAME = "${appName.toUpperCase()}_CONFIG"
 default_config = "/data/${appName}/config/${appName}-config.properties"
@@ -70,9 +71,28 @@ grails.exceptionresolver.params.exclude = ['password']
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
 grails.hibernate.cache.queries = false
 
+// configure mail settings
+grails.mail.host = "smtp.csiro.au"
+grails.mail.default.from = "support@ala.org.au"
+
+// default application config
+webapi.support.email="support@ala.org.au"
+webapi.digest.threshold=3L
+webapi.heartbeat.threads=10
+
+// set grails spring beans properties
+beans {
+    exampleService {
+        emailAddress = '${webapi.support.email}'
+        failureThreshold = '${webapi.digest.threshold}'
+    }
+}
+
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.mail.disabled = true
+        grails.mail.overrideAddress = "simon.bear@csiro.au"
     }
     production {
         grails.logging.jul.usebridge = false
@@ -99,6 +119,11 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    info   'grails.app.services',
+           'grails.app.jobs'
+
+    //trace 'org.hibernate'
 }
 
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements

@@ -7,10 +7,16 @@ class Example {
     WebService webService
     String urlPath = ""
     String onlineViewer = ""
+    boolean machineCallable = true
     Date dateCreated
     Date lastUpdated
 
-    static hasMany = [params:ExampleParam]
+    static def sideEffectFree(boolean machineCallable = true) {
+        Example.executeQuery("select e from Example e join e.webService ws where 'GET' in elements(ws.httpMethod) and e.machineCallable = :callable", [callable: machineCallable])
+    }
+
+    static hasMany = [params:ExampleParam, runs:ExampleRun]
+    static belongsTo = [webService: WebService]
 
     def getSortedParams(){
         params.sort { it.id }
@@ -53,6 +59,8 @@ class Example {
     static mapping = {
       description type: 'text'
       urlPath type: 'text'
+      machineCallable default: true
       params cascade: "all-delete-orphan"
+      runs cascade: "all-delete-orphan"
     }
 }

@@ -33,21 +33,28 @@
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'urlPath', 'error')} ">
-    <label for="name">
-        <g:message code="example.name.label" default="URL Path - use this for REST Style URLs that dont use request parameters"/>
+    <label for="urlPath">
+        <g:message code="example.urlPath.label" default="URL Path - use this for REST Style URLs that dont use request parameters"/>
 
     </label>
     <g:textField name="urlPath" class="input-xxlarge" value="${exampleInstance?.urlPath?:''}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'onlineViewer', 'error')} ">
-    <label for="name">
-        <g:message code="example.name.label" default="Link to a online viewer (e.g. API Kitchen, bl.ocks.org)"/>
+    <label for="onlineViewer">
+        <g:message code="example.onlineViewer.label" default="Link to a online viewer (e.g. API Kitchen, bl.ocks.org)"/>
 
     </label>
     <g:textField name="onlineViewer" class="input-xxlarge" value="${exampleInstance?.onlineViewer?:''}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'machineCallable', 'error')} ">
+    <label for="machineCallable">
+        <g:message code="example.machineCallable.label" default="Machine Callable: Is this example intended for consumption by other software?"/>
+
+    </label>
+    <g:checkBox name="machineCallable" value="${exampleInstance?.machineCallable}"/>
+</div>
 
 <div class="well well-small">
 

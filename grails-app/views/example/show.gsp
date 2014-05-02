@@ -85,6 +85,16 @@
             </li>
         </g:if>
 
+        <li class="fieldcontain">
+            <span id="machineCallable-label" class="property-label"><g:message code="example.machineCallable.label"
+                                                                           default="Machine Callable"/></span>
+
+            <span class="property-value" aria-labelledby="machineCallable-label">
+                <g:fieldValue bean="${exampleInstance}" field="machineCallable"/>
+            </span>
+
+        </li>
+
         <g:if test="${exampleInstance?.webService}">
             <li class="fieldcontain">
                 <span id="webService-label" class="property-label"><g:message code="example.webService.label"
