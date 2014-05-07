@@ -19,7 +19,7 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "none"
+            dbCreate = "update"
             testOnBorrow = true
             properties {
                 maxActive = 10
