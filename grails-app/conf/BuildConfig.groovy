@@ -54,7 +54,7 @@ grails.project.dependency.resolution = {
         build ":tomcat:$grailsVersion"
         runtime ":database-migration:1.3.2"
         compile ':cache:1.1.1'
-        runtime ":ala-web-theme:0.4"
+        runtime ":ala-web-theme:0.3"
         compile ":quartz:1.0.1"
         compile ":mail:1.0.4"
         compile ":d3:3.4.1.0"
