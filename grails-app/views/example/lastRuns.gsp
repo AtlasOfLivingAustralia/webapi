@@ -40,9 +40,9 @@
                 <td><prettytime:display date="${exampleRun.start}" /></td>
                 <td><joda:formatPeriod value="${new Duration(exampleRun.duration)}" /></td>
                 <td>
-                    <g:link class="btn btn-small" controller="example" action="graph" id="${exampleRun.example.id}">History</g:link>
-                    <g:link class="btn btn-small" controller="example" action="callExample" id="${exampleRun.example.id}">Run Now</g:link>
                     <g:link class="btn btn-small" controller="exampleRun" action="response" id="${exampleRun.id}">Body</g:link>
+                    <g:link class="btn btn-small" controller="example" action="callExample" id="${exampleRun.example.id}">Run Now</g:link>
+                    <g:link class="btn btn-small" controller="example" action="graph" id="${exampleRun.example.id}">History</g:link>
                 </td>
             </tr>
         </g:each>

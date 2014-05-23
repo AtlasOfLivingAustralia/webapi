@@ -190,7 +190,44 @@ class ExampleController {
         def order = params.order in ['asc', 'desc'] ? params.order : 'asc'
 
         def latestRuns = Timer.time {
-            ExampleRun.executeQuery("select new map(er.id as id, er.example as example, er.responseCode as responseCode, er.message as message, er.duration as duration, er.start as start) from ExampleRun as er where (er.example.id, er.start) in (select er2.example.id, max(er2.start) from ExampleRun as er2 group by er2.example.id) order by er.$sort $order")
+            //ExampleRun.executeQuery("select new map(er.id as id, er.example as example, er.responseCode as responseCode, er.message as message, er.duration as duration, er.start as start) from ExampleRun as er where (er.example.id, er.start) in (select er2.example.id, max(er2.start) from ExampleRun as er2 group by er2.example.id) order by er.$sort $order")
+            // The above generates a really slow query for MySQL 5.0 (but seemingly not for 5.6)
+            // so do the following instead
+            final lastExamples = ExampleRun.executeQuery("select new map(er2.example.id as exampleId, max(er2.start) as maxStart) from ExampleRun as er2 group by er2.example.id")
+            final values = lastExamples.collect { ExampleRun.executeQuery("select new map(er.id as id, er.example as example, er.responseCode as responseCode, er.message as message, er.duration as duration, er.start as start) from ExampleRun as er where (er.example.id, er.start) =  (:exampleId, :maxStart)", [exampleId: it.exampleId, maxStart: it.maxStart])}.flatten()
+
+            if (sort) {
+                values.sort(true) { self, other ->
+                    final o1, o2
+                    switch (sort) {
+                        case 'example.name':
+                            o1 = self.example.name
+                            o2 = other.example.name
+                            break
+                        case 'responseCode':
+                            o1 = self.responseCode
+                            o2 = other.responseCode
+                            break
+                        case 'start':
+                            o1 = self.start
+                            o2 = other.start
+                            break
+                        case 'duration':
+                            o1 = self.duration
+                            o2 = other.duration
+                            break
+                        default:
+                            o1 = self.id
+                            o2 = other.id
+                            break
+                    }
+                    final val
+                    if (order == 'desc') val = o2?.compareTo(o1) ?: -1
+                    else val = o1?.compareTo(o2) ?: 1
+                    val
+                }
+            }
+            values
         }
 
         latestRuns.value.each {
