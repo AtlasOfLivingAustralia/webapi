@@ -7,7 +7,7 @@ class WebserviceListController {
     def grailsCacheAdminService
 
     def byCategory() {
-      render(view: "byGroup", model: [wsByGroup: listCacheService.byCategory(), byCategory:true, isEditor: authService.userInRole("ROLE_API_EDITOR")])
+      render(view: "byCategory", model: [wsByGroup: listCacheService.byCategory(), byCategory:true, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
 
     def clearCache(){
@@ -32,7 +32,7 @@ class WebserviceListController {
           wsByApp[app] = app.webservices
       }
 
-      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
+      render(view: "byApp", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
 
     def bySpecificApp() {
@@ -43,7 +43,7 @@ class WebserviceListController {
 
       wsByApp[app] = app.webservices
 
-      render(view: "byGroup", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
+      render(view: "byApp", model: [wsByGroup: wsByApp, byCategory:false, isEditor: authService.userInRole("ROLE_API_EDITOR")])
     }
 
     def sendHeartbeat() {
