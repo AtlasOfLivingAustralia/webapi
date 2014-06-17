@@ -14,7 +14,7 @@ class ExampleController {
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 1000, 1000)
         [exampleInstanceList: Example.list(params), exampleInstanceTotal: Example.count()]
     }
 

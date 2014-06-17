@@ -20,6 +20,11 @@
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
+
+            <p class="lead">
+                A list of supported formats. Add formats here to reuse in webservice description.
+            </p>
+
 			<table>
 				<thead>
 					<tr>

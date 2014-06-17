@@ -22,7 +22,7 @@
         <g:message code="example.name.label" default="Name of the example e.g. Search for kangaroo"/>
 
     </label>
-    <g:textField name="name" value="${exampleInstance?.name}"/>
+    <g:textField name="name" value="${exampleInstance?.name}" class="input-xxlarge"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'description', 'error')} ">
@@ -49,11 +49,10 @@
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: exampleInstance, field: 'machineCallable', 'error')} ">
-    <label for="machineCallable">
-        <g:message code="example.machineCallable.label" default="Machine Callable: Is this example intended for consumption by other software?"/>
-
+    <label for="machineCallable" class="checkbox">
+        <g:checkBox name="machineCallable" value="${exampleInstance?.machineCallable}"/>
+        <g:message code="example.machineCallable.label" default="Machine callable: Is this example intended for consumption by other software?"/>
     </label>
-    <g:checkBox name="machineCallable" value="${exampleInstance?.machineCallable}"/>
 </div>
 
 <div class="well well-small">

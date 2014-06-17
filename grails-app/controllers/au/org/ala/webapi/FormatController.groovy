@@ -11,7 +11,7 @@ class FormatController {
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 1000, 1000)
         [formatInstanceList: Format.list(params), formatInstanceTotal: Format.count()]
     }
 

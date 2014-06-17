@@ -36,6 +36,8 @@
 
             <g:sortableColumn property="name" title="${message(code: 'example.name.label', default: 'Name')}"/>
 
+            <th><g:message code="example.webService.label" default="Web Service"/></th>
+
             <g:sortableColumn property="description"
                               title="${message(code: 'example.description.label', default: 'Description')}"/>
 
@@ -44,8 +46,6 @@
 
             <g:sortableColumn property="lastUpdated"
                               title="${message(code: 'example.lastUpdated.label', default: 'Last Updated')}"/>
-
-            <th><g:message code="example.webService.label" default="Web Service"/></th>
 
         </tr>
         </thead>
@@ -56,13 +56,14 @@
                 <td><g:link action="show"
                             id="${exampleInstance.id}">${fieldValue(bean: exampleInstance, field: "name")}</g:link></td>
 
+                <td>${fieldValue(bean: exampleInstance, field: "webService")}</td>
+
                 <td>${fieldValue(bean: exampleInstance, field: "description")}</td>
 
                 <td><g:formatDate date="${exampleInstance.dateCreated}"/></td>
 
                 <td><g:formatDate date="${exampleInstance.lastUpdated}"/></td>
 
-                <td>${fieldValue(bean: exampleInstance, field: "webService")}</td>
 
             </tr>
         </g:each>
