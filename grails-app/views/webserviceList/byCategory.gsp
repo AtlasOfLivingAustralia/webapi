@@ -49,6 +49,7 @@
                     The webservices are listed by application. To list by category, <g:link action="byCategory">click here</g:link>.
                 </g:else>
             </p>
+            <div class="pull-right"><div class="btn" onclick="expandApis()"><i class="icon-plus"></i> Expand All</div> <div class="btn" onclick="collapseApis()"><i class="icon-minus"></i> Collapse All</div></div>
             <cache:block>
                 <g:render template="byGroup" model="[wsByGroup:wsByGroup]"/>
             </cache:block>
@@ -65,6 +66,12 @@ $(function() {
     });
     $('.wsLabel').tooltip({});
  });
+    function expandApis(){
+        $('.webServiceDetails').attr('style','display:block')
+    }
+    function collapseApis(){
+        $('.webServiceDetails').attr('style','display:none')
+    }
 </r:script>
 
 </html>
