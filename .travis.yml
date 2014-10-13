@@ -19,7 +19,8 @@ before_script:
 - MAVEN_REPO="ala-repo-snapshot"; grep '^app\.version=' ./application.properties |
   grep -q "\-SNAPSHOT"; if [ "$?" = "1" ]; then MAVEN_REPO="ala-repo-release"; fi;
 script: grails clean && grails refresh-dependencies --non-interactive && grails prod
-  war --non-interactive && grails prod maven-deploy --repository=$MAVEN_REPO --non-interactive
+  war --non-interactive
+after_success: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && grails prod maven-deploy --repository=$MAVEN_REPO --non-interactive'
 env:
   global:
   - secure: zKPxnpcJVhJ2o2uVJH5rKa+2iiFTaO+VLyLYNCswGIVNBncmvXyeAJf9ifIVHtAYZ60MkiExpSvc0mEceLKRWUnupbxncbB8K9oe+T/v27IhoFG+lfjdDH0s445+h5DhAf9f/DpmcL8BK7WSXsw/Li14RrPZNXTwwERHev0D+zM=
