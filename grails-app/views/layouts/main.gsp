@@ -67,9 +67,9 @@
 </head>
 <body class="${pageProperty(name:'body.class')}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
 
-<hf:banner logoutUrl="${grailsApplication.config.contextPath}/logout/logout"
-           loginReturnToUrl="${grailsApplication.config.serverName}${grailsApplication.config.contextPath}"
-           logoutReturnToUrl="${grailsApplication.config.serverName}${grailsApplication.config.contextPath}"/>
+<hf:banner logoutUrl="${g.createLink(controller:"logout", action:"logout", absolute: true)}"
+           loginReturnToUrl="${grailsApplication.config.grails.serverURL}"
+           logoutReturnToUrl="${grailsApplication.config.grails.serverURL}"/>
 
 <hf:menu/>
 
