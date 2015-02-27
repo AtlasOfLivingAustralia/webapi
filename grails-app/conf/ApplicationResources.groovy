@@ -8,4 +8,5 @@ modules = {
     tooltip {
         resource url:'js/bootstrap-tooltip.js'
     }
+
 }

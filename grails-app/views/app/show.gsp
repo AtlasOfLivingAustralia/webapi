@@ -6,16 +6,16 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'app.label', default: 'App')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+        <r:require module="font-awesome"/>
 	</head>
 	<body>
 		<a href="#show-app" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
+        <ul class="breadcrumb" role="navigation">
+            <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a> <span class="divider"><i class="fa fa-arrow-right"></i></span></li>
+            <li><g:link class="list"><g:message code="default.list.label" args="[entityName]" /></g:link> <span class="divider"><i class="fa fa-arrow-right"></i></span></li>
+            <li class="active"><g:message code="default.show.label" args="[entityName]" /></li>
+        </ul>
+
 		<div id="show-app" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

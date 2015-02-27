@@ -39,7 +39,7 @@
 
 		<div  role="main">
 			<h1>Web service API</h1>
-            <p class="lead">
+            <p>
                 <span class="hidden-phone">The (nearly) complete listing of the web services for the ALA. Send complements/issues to support@ala.org.au. <br/></span>
 
                 <g:if test="${byCategory}">

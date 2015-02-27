@@ -1,3 +1,5 @@
+import grails.util.Environment
+
 grails.servlet.version = "2.5" // Change depending on target container compliance (2.5 or 3.0)
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
@@ -39,23 +41,33 @@ grails.project.dependency.resolution = {
 
     plugins {
         build ":release:3.0.1"
-        compile ":scaffolding:2.0.1"
-        runtime ":hibernate:3.6.10.16"
-        runtime ":jquery:1.8.3"
-        runtime ":resources:1.2"
-        compile ":markdown:1.1.1"
         build ":tomcat:7.0.54"
-        runtime ":database-migration:1.3.2"
+
         compile ':cache:1.1.1'
-        runtime ":ala-web-theme:0.4"
+        compile ":scaffolding:2.0.1"
         compile ":quartz:1.0.1"
         compile ":mail:1.0.4"
         compile ":d3:3.4.1.0"
         compile ":joda-time:1.4"
         compile ":pretty-time:2.1.3.Final-1.0.1"
-        runtime ':database-migration:1.3.8'
-        test(":spock:0.7") {
-            exclude "spock-grails-support"
+        compile ":markdown:1.1.1"
+        compile ":font-awesome-resources:4.2.0.0"
+
+        runtime ":database-migration:1.3.2"
+        runtime (":ala-bootstrap2:2.0") {
+            exclude "jquery"
         }
+        runtime ":resources:1.2.14"
+        if (Environment.current == Environment.PRODUCTION) {
+            runtime ":zipped-resources:1.0.1"
+            runtime ":cached-resources:1.1"
+            compile ":cache-headers:1.1.7"
+            runtime ":yui-minify-resources:0.1.5"
+        }
+        runtime ':ala-auth:1.0'
+        runtime ":hibernate:3.6.10.16"
+        runtime ":jquery:1.8.3"
+        runtime ':database-migration:1.3.8'
+
     }
 }

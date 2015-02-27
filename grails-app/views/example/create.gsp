@@ -5,27 +5,26 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'example.label', default: 'Example')}"/>
     <title><g:message code="default.create.label" args="[entityName]"/></title>
+    <r:require module="font-awesome"/>
 </head>
 
 <body>
 <a href="#create-example" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                                 default="Skip to content&hellip;"/></a>
-
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]"/></g:link></li>
-    </ul>
-</div>
+<ul class="breadcrumb" role="navigation">
+    <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a> <span class="divider"><i class="fa fa-arrow-right"></i></span></li>
+    <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link> <span class="divider"><i class="fa fa-arrow-right"></i></span></li>
+    <li class="active"><g:message code="default.create.label" args="[entityName]" /></li>
+</ul>
 
 <div id="create-example" class="content scaffold-create" role="main">
     <h1><g:message code="default.create.label" args="[entityName]"/>
-        <g:if test="${webService}">
-            <g:message code="default.create.for.service.label"  default="for service"/>
-            <g:link controller="webService" action="show" id="${webService.id}">
-                ${webService.name}
-            </g:link>
-        </g:if>
+    <g:if test="${webService}">
+        <g:message code="default.create.for.service.label" default="for service"/>
+        <g:link controller="webService" action="show" id="${webService.id}">
+            ${webService.name}
+        </g:link>
+    </g:if>
     </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
@@ -50,8 +49,8 @@
 </div>
 
 <table id="tableTemplate" class="hide">
-    <tr class="paramRowTemplate" >
-       <g:render template="param"/>
+    <tr class="paramRowTemplate">
+        <g:render template="param"/>
     </tr>
 </table>
 
