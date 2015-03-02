@@ -6,7 +6,6 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'webService.label', default: 'WebService')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
-        <r:require module="font-awesome"/>
 	</head>
 	<body>
 		<a href="#list-webService" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

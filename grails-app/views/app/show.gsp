@@ -6,7 +6,6 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'app.label', default: 'App')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
-        <r:require module="font-awesome"/>
 	</head>
 	<body>
 		<a href="#show-app" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

@@ -5,7 +5,6 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'example.label', default: 'Example')}"/>
     <title><g:message code="default.create.label" args="[entityName]"/></title>
-    <r:require module="font-awesome"/>
 </head>
 
 <body>

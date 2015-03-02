@@ -51,10 +51,9 @@ grails.project.dependency.resolution = {
         compile ":joda-time:1.4"
         compile ":pretty-time:2.1.3.Final-1.0.1"
         compile ":markdown:1.1.1"
-        compile ":font-awesome-resources:4.2.0.0"
 
         runtime ":database-migration:1.3.2"
-        runtime (":ala-bootstrap2:2.0") {
+        runtime (":ala-bootstrap2:2.1-SNAPSHOT") {
             exclude "jquery"
         }
         runtime ":resources:1.2.14"

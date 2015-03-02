@@ -3,7 +3,6 @@
 <head>
     <meta name="layout" content="main">
     <title>Last run examples</title>
-    <r:require module="font-awesome"/>
 </head>
 
 <body>
