@@ -6,11 +6,11 @@
 </head>
 
 <body>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-    </ul>
-</div>
+
+<ul class="breadcrumb" role="navigation">
+    <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a> <span class="divider"><i class="fa fa-arrow-right"></i></span></li>
+    <li class="active"><g:message code="default.list.label" args="['Latest Example Runs']" /></li>
+</ul>
 
 <div id="list-example" class="content scaffold-list" role="main">
     <h1><g:message code="default.list.label" args="['Latest Example Runs']"/></h1>

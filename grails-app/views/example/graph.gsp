@@ -6,7 +6,7 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'example.label', default: 'Example')}" />
     <title><g:message code="default.show.label" args="[entityName]" /></title>
-    <r:require modules="d3"/>
+    <r:require modules="d3, font-awesome"/>
     <style type="text/css">
     .inline {
         display: inline-block;
@@ -53,15 +53,16 @@
 </head>
 <body>
 <a href="#show-example" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="show" controller="example" action="show" id="${exampleInstance.id}"><g:message code="default.show.label" args="[entityName]" /></g:link></li>
-    </ul>
-</div>
+<ul class="breadcrumb" role="navigation">
+    <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a> <span class="divider"><i class="fa fa-arrow-right"></i></span></li>
+    <li class="active"><g:message code="default.show.label" args="[entityName]" /> History</li>
+</ul>
+
 <div id="show-example" class="content scaffold-show" role="main" xmlns:svg="http://www.w3.org/2000/svg">
     <h1><g:fieldValue bean="${exampleInstance}"
-                      field="name"/></h1>
+                      field="name"/>
+    <g:link class="show btn btn-primary pull-right" controller="example" action="show" id="${exampleInstance.id}"><g:message code="default.show.label" args="[entityName]" /></g:link>
+    </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>

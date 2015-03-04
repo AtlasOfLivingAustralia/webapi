@@ -10,23 +10,22 @@
 <body>
 <a href="#list-example" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                               default="Skip to content&hellip;"/></a>
+<ul class="breadcrumb" role="navigation">
+    <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a> <span class="divider"><i class="fa fa-arrow-right"></i></span></li>
+    <li class="active"><g:message code="default.list.label" args="[entityName]" /></li>
+</ul>
 
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        %{--<li><g:link class="create" action="create"><g:message code="default.new.label"--}%
-                                                              %{--args="[entityName]"/></g:link></li>--}%
-    </ul>
-</div>
 
 <div id="list-example" class="content scaffold-list" role="main">
-    <h1><g:message code="default.list.label" args="[entityName]"/></h1>
+    <h1><g:message code="default.list.label" args="[entityName]"/>
+        <g:link class="create btn btn-primary pull-right" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link>
+    </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
 
-    <p class="lead">
-        To add an example, select the <g:link controller="webserviceList" action="byCategory">webservice</g:link> first, and then use the
+    <p>
+        To add an example, you can also select the <g:link controller="webserviceList" action="byCategory">webservice</g:link> first, and then use the
         "Add example" button.
     </p>
 
