@@ -1,7 +1,7 @@
 <%@ page import="org.joda.time.Duration" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="main">
+    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <title>Last run examples</title>
 </head>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main"/>
+        <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
 		<title>Web service API</title>
         <r:require modules="webapi,tooltip"/>
         <g:if test="${!isEditor}">

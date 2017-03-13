@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="main">
+    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <g:set var="entityName" value="${message(code: 'example.label', default: 'Example')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
 </head>
