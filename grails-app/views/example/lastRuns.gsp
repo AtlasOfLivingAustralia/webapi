@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
-    <title>Last run examples</title>
+    <title>Last run examples | Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 
 <body>

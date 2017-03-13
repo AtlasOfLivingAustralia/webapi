@@ -4,7 +4,7 @@
 	<head>
 		<meta name="layout" content="${grailsApplication.config.skin.layout}"/>
 		<g:set var="entityName" value="${message(code: 'app.label', default: 'App')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<title><g:message code="default.edit.label" args="[entityName]" /> | Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
 	</head>
 	<body>
 		<a href="#edit-app" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

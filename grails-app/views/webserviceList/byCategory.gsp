@@ -3,7 +3,7 @@
 <html>
 	<head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
-		<title>Web service API</title>
+		<title>Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
         <r:require modules="webapi,tooltip"/>
         <g:if test="${!isEditor}">
             <style type="text/css">
@@ -40,8 +40,6 @@
 		<div  role="main">
 			<h1>Web service API</h1>
             <p>
-                <span class="hidden-phone">The (nearly) complete listing of the web services for the ALA. Send complements/issues to support@ala.org.au. <br/></span>
-
                 <g:if test="${byCategory}">
                     The webservices are listed by category. To list by application, <g:link action="byApp">click here</g:link>.
                 </g:if>

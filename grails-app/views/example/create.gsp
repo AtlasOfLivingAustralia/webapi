@@ -4,7 +4,7 @@
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <g:set var="entityName" value="${message(code: 'example.label', default: 'Example')}"/>
-    <title><g:message code="default.create.label" args="[entityName]"/></title>
+    <title><g:message code="default.create.label" args="[entityName]"/> | Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 
 <body>

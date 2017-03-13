@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="main">
+    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <g:set var="entityName" value="${message(code: 'example.label', default: 'Example')}" />
-    <title><g:message code="default.show.label" args="[entityName]" /></title>
+    <title><g:message code="default.show.label" args="[entityName]" /> | Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
     <r:require modules="d3, font-awesome"/>
     <style type="text/css">
     .inline {
