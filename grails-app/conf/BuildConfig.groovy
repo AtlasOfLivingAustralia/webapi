@@ -53,7 +53,7 @@ grails.project.dependency.resolution = {
         compile ":markdown:1.1.1"
 
         runtime ":database-migration:1.3.2"
-        runtime (":ala-bootstrap2:2.1") {
+        runtime (":ala-bootstrap2:2.4.5") {
             exclude "jquery"
         }
         runtime ":resources:1.2.14"
