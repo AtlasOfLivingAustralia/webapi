@@ -58,10 +58,10 @@ class WebService {
 
     static constraints = {
         name(nullable:false)
-        description(nullable:true, maxSize: Integer.MAX_VALUE)
+        description(nullable: true, maxSize: Integer.MAX_VALUE, widget: 'textarea')
         url(nullable:false)
         deprecated(nullable:false)
-        exampleOutput(nullable:true, maxSize: Integer.MAX_VALUE)
+        exampleOutput(nullable: true, maxSize: Integer.MAX_VALUE, widget: 'textarea')
     }
 
     static mapping = {

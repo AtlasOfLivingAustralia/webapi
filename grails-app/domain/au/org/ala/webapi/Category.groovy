@@ -13,7 +13,7 @@ class Category {
     static constraints = {
         name(nullable:false)
         shortDescription(nullable:false, maxSize: 200)
-        description(nullable:false, maxSize: 2000)
+        description(nullable: false, maxSize: 2000, widget: 'textarea')
     }
 
     static mapping = {

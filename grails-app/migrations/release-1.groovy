@@ -223,7 +223,7 @@ databaseChangeLog = {
 			}
 
 			column(name: "example_output", type: "LONGTEXT") {
-				constraints(nullable: "false")
+				constraints(nullable: "true")
 			}
 
 			column(name: "last_updated", type: "DATETIME") {

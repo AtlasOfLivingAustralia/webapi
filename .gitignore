@@ -97,3 +97,10 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+Thumbs.db
+build/
+.idea
+*.iml
+.project
+.classpath
+

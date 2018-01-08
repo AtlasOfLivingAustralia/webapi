@@ -27,7 +27,7 @@ class Param {
         webService(nullable:false)
         name(nullable:false)
         description(nullable:true)
-        type(nullable:false, inList: paramTypes)
+        type(nullable: false, inList: ['String', 'Integer', 'Date', 'Double', 'Boolean'])
         format(nullable:true)
     }
 

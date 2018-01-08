@@ -1,5 +1,5 @@
 package au.org.ala.webapi
 
 class ExampleParamController {
-    static scaffold = true
+    static scaffold = ExampleParam
 }

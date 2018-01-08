@@ -1,20 +1,16 @@
 package au.org.ala.webapi
 
-import org.springframework.dao.DataIntegrityViolationException
-
 class WebServiceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static defaultAction = "list"
+    static scaffold = WebService
 
     def combinedCacheService
 
-    def index() {
-        redirect(action: "list", params: params)
-    }
-
     def list(Integer max) {
-        params.max = Math.min(max ?: 100, 1000)
-        [webServiceInstanceList: WebService.list(params), webServiceInstanceTotal: WebService.count()]
+        params.max = Math.min(max ?: 1000, 1000)
+        respond WebService.list(params), model: [webServiceCount: WebService.count()]
     }
 
     def create() {
@@ -46,10 +42,10 @@ class WebServiceController {
             }
             clone.params = clonedParams
             combinedCacheService.clearCache()
-            [webServiceInstance: clone]
+            respond clone
         } else {
             combinedCacheService.clearCache()
-            [webServiceInstance: new WebService(params)]
+            respond new WebService(params)
         }
     }
 
@@ -69,28 +65,6 @@ class WebServiceController {
         } else {
             redirect(action: "show", id: webServiceInstance.id)
         }
-    }
-
-    def show(Long id) {
-        def webServiceInstance = WebService.get(id)
-        if (!webServiceInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'webService.label', default: 'WebService'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [webServiceInstance: webServiceInstance]
-    }
-
-    def edit(Long id) {
-        def webServiceInstance = WebService.get(id)
-        if (!webServiceInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'webService.label', default: 'WebService'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [webServiceInstance: webServiceInstance]
     }
 
     def update(Long id, Long version) {
@@ -181,7 +155,7 @@ class WebServiceController {
             redirect(action: "show", id: webServiceInstance.id)
         }
     }
-//
+
     private void storeParams(webServiceInstance, params) {
         //save the parameters
         def paramNames = params.list('paramName')
@@ -214,25 +188,4 @@ class WebServiceController {
             webServiceInstance.params << p
         }
     }
-
-    def delete(Long id) {
-        def webServiceInstance = WebService.get(id)
-        if (!webServiceInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'webService.label', default: 'WebService'), id])
-            redirect(action: "list")
-            return
-        }
-
-        try {
-            webServiceInstance.delete(flush: true)
-            combinedCacheService.clearCache()
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'webService.label', default: 'WebService'), id])
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'webService.label', default: 'WebService'), id])
-            redirect(action: "show", id: id)
-        }
-    }
-
 }

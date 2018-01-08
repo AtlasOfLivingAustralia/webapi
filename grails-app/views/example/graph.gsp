@@ -5,11 +5,16 @@
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <g:set var="entityName" value="${message(code: 'example.label', default: 'Example')}" />
-    <title><g:message code="default.show.label" args="[entityName]" /> | Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
-    <r:require modules="d3, font-awesome"/>
+    <title>History | ${grailsApplication.config.skin.orgNameLong}</title>
+    <meta name="breadcrumbs" content="${createLink(uri: '/')},${grailsApplication.config.application.title}"/>
+    <meta name="breadcrumb" content="History"/>
+    <asset:stylesheet src="webapi"/>
+    <asset:javascript src="d3.min.js"/>
     <style type="text/css">
     .inline {
         display: inline-block;
+        font-weight: normal;
+        padding-right: 10px;
     }
     line {
         stroke: black;
@@ -58,7 +63,7 @@
     <li class="active"><g:message code="default.show.label" args="[entityName]" /> History</li>
 </ul>
 
-<div id="show-example" class="content scaffold-show" role="main" xmlns:svg="http://www.w3.org/2000/svg">
+<div id="show-example" class="content scaffold-show" role="main">
     <h1><g:fieldValue bean="${exampleInstance}"
                       field="name"/>
     <g:link class="show btn btn-primary pull-right" controller="example" action="show" id="${exampleInstance.id}"><g:message code="default.show.label" args="[entityName]" /></g:link>
@@ -140,9 +145,16 @@
                 </g:findAll>
             </tbody>
         </table>
-        <r:script>
+        <asset:script defer="true">
+
             'use strict';
+
             $(function() {
+
+                function escapeHTML(html) {
+                    return html.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                }
+
                 var w = 668,
                     h = 300,
                     p = 100;
@@ -151,7 +163,7 @@
                     return x >= min && x <= max;
                 };
 
-                var data =${sortedRuns as JSON},
+                var data =${encodeAs([codec: 'raw'], (sortedRuns as JSON).toString())},
                         scaleX = d3.time.scale().domain([Date.parse(data[0].start), Date.parse(data[data.length - 1].start)]).range([0, w]),
                         scaleY = d3.scale.linear().domain([0, Math.min(${max.duration}, 10000)]).range([h, 0]).clamp(true);
                 var svg = d3.select('div#graph')
@@ -265,7 +277,7 @@
                 });
             });
 
-        </r:script>
+        </asset:script>
     </g:if>
     <g:else>
         <div class="well well-large">

@@ -2,7 +2,10 @@
 <html>
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
-    <title>Last run examples | Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
+    <title>Last run examples | ${grailsApplication.config.skin.orgNameLong}</title>
+    <asset:stylesheet src="webapi"></asset:stylesheet>
+    <meta name="breadcrumbs" content="${createLink(uri: '/')},${grailsApplication.config.application.title}"/>
+    <meta name="breadcrumb" content="Last run examples"/>
 </head>
 
 <body>
@@ -23,13 +26,17 @@
         List of the last time each Example was called from the webapi server.
     </p>
 
-    <table class="table">
+    <table class="table table-bordered table-striped table-condensed">
         <thead>
         <tr>
-            <g:sortableColumn property="example.name" title="${message(code: 'exampleRun.example.name.label', default: 'Example Name')}"/>
-            <g:sortableColumn property="responseCode" title="${message(code: 'exampleRunResponse.responseCode.label', default: 'Response')}"/>
-            <g:sortableColumn property="start" title="${message(code: 'exampleRun.start.label', default: 'When')}"/>
-            <g:sortableColumn property="duration" title="${message(code: 'exampleRun.duration.label', default: 'Duration')}"/>
+            <g:sortableColumn property="example.name" mapping="LastRuns"
+                              title="${message(code: 'exampleRun.example.name.label', default: 'Example Name')}"/>
+            <g:sortableColumn property="responseCode" mapping="LastRuns"
+                              title="${message(code: 'exampleRunResponse.responseCode.label', default: 'Response')}"/>
+            <g:sortableColumn property="start" mapping="LastRuns"
+                              title="${message(code: 'exampleRun.start.label', default: 'When')}"/>
+            <g:sortableColumn property="duration" mapping="LastRuns"
+                              title="${message(code: 'exampleRun.duration.label', default: 'Duration')}"/>
             <th><g:message code="exampleRun.links" default="Links"/></th>
         </tr>
         </thead>
@@ -45,16 +52,20 @@
                      </g:link>
                 </td>
                 <td >
-                    <span class="well ${exampleRun.responseCode < 300 ? 'label label-success' : ' label label-important'}" style="padding:5px; color:#FFFFFF;">
+                    <span class="${exampleRun.responseCode < 300 ? 'label label-success' : ' label label-danger'}"
+                          style="padding:5px;">
                         ${(exampleRun.responseCode ?: exampleRun.message).encodeAsHTML()}
                     </span>
                 </td>
                 <td><prettytime:display date="${exampleRun.start}" /></td>
                 <td><joda:formatPeriod value="${new Duration(exampleRun.duration)}" /></td>
-                <td>
-                    <g:link class="btn btn-small" controller="exampleRun" action="response" id="${exampleRun.id}">Body</g:link>
-                    <g:link class="btn btn-small" controller="example" action="callExample" id="${exampleRun.example.id}">Run Now</g:link>
-                    <g:link class="btn btn-small" controller="example" action="graph" id="${exampleRun.example.id}">History</g:link>
+                <td style="width:200px;">
+                    <g:link class="btn btn-xs btn-ala" controller="exampleRun" action="response"
+                            id="${exampleRun.id}">Body</g:link>
+                    <g:link class="btn btn-xs btn-ala" controller="example" action="callExample"
+                            id="${exampleRun.example.id}">Run Now</g:link>
+                    <g:link class="btn btn-xs btn-ala" controller="example" action="graph"
+                            id="${exampleRun.example.id}">History</g:link>
                 </td>
             </tr>
         </g:each>
@@ -64,11 +75,12 @@
     <div class="well-small well"><small>Retrieved in <joda:formatPeriod value="${new Duration(latestRuns.start, latestRuns.end)}"/></small></div>
 
     <h1>Web Services with a GET method and without machine callable examples</h1>
-    <table class="table">
+    <table class="table table-striped table-bordered table-condensed">
     <g:each in="${services.value}" status="i" var="service">
         <tr>
             <td><g:link controller="webService" action="show" id="${service.id}"><g:fieldValue field="name" bean="${service}" /></g:link></td>
-            <td><g:link class="btn btn-mini" controller="example" action="createForWS" id="${service.id}">Add example</g:link></td>
+            <td><g:link class="btn btn-xs btn-ala" controller="example" action="create"
+                        params="[webService: service.id]">Add example</g:link></td>
         </tr>
     </g:each>
     </table>

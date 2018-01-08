@@ -1,6 +1,7 @@
 package au.org.ala.webapi
 
 import com.google.common.base.Charsets
+import grails.util.Holders
 import groovy.time.TimeCategory
 import org.apache.commons.lang.time.DateUtils
 import org.springframework.transaction.annotation.Transactional
@@ -18,9 +19,6 @@ class ExampleService {
     def httpExecutor
     def messageSource
 
-    def emailAddress // injected with property in Config.groovy
-    long failureThreshold // injected with property in Config.groovy
-
     def findBrokenWebServices(Date start, Date end, long failureThreshold) {
         Example.executeQuery("from Example e where (select count(*) from ExampleRun f where f.example = e and f.start between :start and :end and (f.exceptionClass is not null or f.responseCode > 299)) > :threshold",
                 ["start":start.time, "end": end.time, "threshold": failureThreshold])
@@ -29,11 +27,11 @@ class ExampleService {
     def sendBrokenWebServicesDigest() {
         final today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH)
         final yesterday = today - 1
-        final examples = findBrokenWebServices(yesterday, today, failureThreshold)
+        final examples = findBrokenWebServices(yesterday, today, Holders.config.webapi.digest.threshold)
         if (examples) {
             mailService.sendMail {
-                to emailAddress
-                from emailAddress
+                to Holders.config.webapi.support.email
+                from Holders.config.grails.mail.default.from
                 subject "Possible broken web services"
                 body( view:"/digestmail/brokenServices",
                         model:[examples: examples])

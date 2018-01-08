@@ -1,10 +1,8 @@
 package au.org.ala.webapi
 
-import org.springframework.dao.DataIntegrityViolationException
-
 class ExampleController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static scaffold = Example
 
     def exampleService
     def combinedCacheService
@@ -16,45 +14,6 @@ class ExampleController {
     def list(Integer max) {
         params.max = Math.min(max ?: 1000, 1000)
         [exampleInstanceList: Example.list(params), exampleInstanceTotal: Example.count()]
-    }
-
-    def create() {
-        [exampleInstance: new Example(params)]
-    }
-
-    def createForWS() {
-        def webService = WebService.get(params.id)
-        def wsParams = webService.getSortedParams()
-        def exampleParams = []
-        if(wsParams){
-            wsParams.eachWithIndex { wsParam, idx -> exampleParams.add(idx, new ExampleParam(param:wsParam))  }
-        }
-
-        def example = new Example(params)
-        example.params = exampleParams
-        example.webService = webService
-
-        combinedCacheService.clearCache()
-        render(view:'create', model:[exampleInstance: example, webService:webService])
-    }
-
-    def save() {
-        def exampleInstance = new Example(params)
-        if (!exampleInstance.save(flush: true)) {
-            render(view: "create", model: [exampleInstance: exampleInstance])
-            return
-        }
-
-        storeParams(exampleInstance, params)
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'example.label', default: 'Example'), exampleInstance.id])
-
-        combinedCacheService.clearCache()
-        if(params.returnTo){
-            redirect(url: params.returnTo)
-        } else {
-            redirect(action: "show", id: exampleInstance.id)
-        }
     }
 
     def show(Long id) {
@@ -83,17 +42,6 @@ class ExampleController {
                 exampleInstance.params << ep
             }
         }
-    }
-
-    def edit(Long id) {
-        def exampleInstance = Example.get(id)
-        if (!exampleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'example.label', default: 'Example'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [exampleInstance: exampleInstance]
     }
 
     def update(Long id, Long version) {
@@ -128,33 +76,12 @@ class ExampleController {
         //add new
         storeParams(exampleInstance, params)
 
-
         combinedCacheService.clearCache()
         flash.message = message(code: 'default.updated.message', args: [message(code: 'example.label', default: 'Example'), exampleInstance.id])
         if(params.returnTo){
             redirect(url: params.returnTo)
         } else {
             redirect(action: "show", id: exampleInstance.id)
-        }
-    }
-
-    def delete(Long id) {
-        def exampleInstance = Example.get(id)
-        if (!exampleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'example.label', default: 'Example'), id])
-            redirect(action: "list")
-            return
-        }
-
-        try {
-            exampleInstance.delete(flush: true)
-            combinedCacheService.clearCache()
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'example.label', default: 'Example'), id])
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'example.label', default: 'Example'), id])
-            redirect(action: "show", id: id)
         }
     }
 
@@ -222,8 +149,9 @@ class ExampleController {
                             break
                     }
                     final val
-                    if (order == 'desc') val = o2?.compareTo(o1) ?: -1
-                    else val = o1?.compareTo(o2) ?: 1
+                    if (order == 'desc') val = o2?.compareTo(o1 ?: 0) ?: -1
+                    else if (o1 == null && o2 == null) val = 0
+                    else val = o1?.compareTo(o2 ?: 0) ?: 1
                     val
                 }
             }
