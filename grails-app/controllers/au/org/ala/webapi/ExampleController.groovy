@@ -1,11 +1,27 @@
 package au.org.ala.webapi
 
-class ExampleController {
+import com.opencsv.CSVWriter
+import grails.config.Config
+import grails.core.support.GrailsConfigurationAware
+
+import static org.springframework.http.HttpStatus.OK
+
+class ExampleController implements GrailsConfigurationAware {
 
     static scaffold = Example
 
     def exampleService
     def combinedCacheService
+
+    String csvMimeType
+    String encoding
+
+    @Override
+    void setConfiguration(Config co) {
+        csvMimeType = co.getProperty('grails.mime.types.csv', String, 'text/csv')
+        encoding = co.getProperty('grails.converters.encoding', String, 'UTF-8')
+
+    }
 
     def index() {
         redirect(action: "list", params: params)
@@ -14,6 +30,46 @@ class ExampleController {
     def list(Integer max) {
         params.max = Math.min(max ?: 1000, 1000)
         [exampleInstanceList: Example.list(params), exampleInstanceTotal: Example.count()]
+    }
+
+    def exportAsCsv(Long id) {
+        List outputList
+        final String filename = 'output.csv'
+
+        if (id) {
+            def app = App.findById(id)
+            log.debug "app = ${app}"
+            def webServices = WebService.findAllByApp(app)
+            filename = "${app}.csv"
+            log.debug "webServices = ${webServices}"
+
+            if (webServices) {
+                def examples = Example.findAllByWebServiceInList(webServices)
+                log.debug "Found ${examples.size()} examples => ${examples}"
+                outputList = examples.collect { [it.name, it.description, it.webService.httpMethod.join("; "), it.webService.outputFormat.join("; "), it.queryUrl] as String[] }
+            }
+
+        } else {
+            return render(status: 400, text: "App id not provided - choose one of: ${App.list().collect{it.id + ' = '  + it.name}.join(' | ')}")
+        }
+
+        OutputStream outs = response.outputStream
+        response.status = OK.value()
+        response.contentType = "${csvMimeType};charset=${encoding}";
+        response.setHeader "Content-disposition", "attachment; filename=${filename}"
+
+        Writer outputStreamWriter = new OutputStreamWriter(outs);
+        CSVWriter writer = new CSVWriter(outputStreamWriter)
+        writer.writeNext(["Name", "Description", "http method", "output format", "URL"] as String[]) // header line
+
+        outputList.each { String[] entry ->
+            writer.writeNext(entry)
+        }
+
+        writer.flush()
+        writer.close()
+        outs.flush()
+        outs.close()
     }
 
     def show(Long id) {
