@@ -26,6 +26,7 @@ webapi.digest.threshold = 3L
 webapi.heartbeat.threads = 10
 
 skin.layout = 'main'
+skin.fluidLayout = 'false'
 
 webapi.support.email = "support@ala.org.au"
 webapi.digest.threshold = 3L

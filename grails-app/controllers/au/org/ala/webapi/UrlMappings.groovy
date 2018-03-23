@@ -19,7 +19,7 @@ class UrlMappings {
 
         "/heartbeat/$id"(controller: 'example', action: 'graph')
 
-		"/admin/$controller/$action?/$id?"{
+		"/admin/$controller/$action?/$id?(.$format)?"{
 			constraints {
 				// apply constraints here
 			}
@@ -31,7 +31,8 @@ class UrlMappings {
 			}
 		}
 
-
 		"500"(view:'/error')
+		"400"(view:'/error')
+		"404"(view:'/notFound')
 	}
 }
