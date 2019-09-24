@@ -84,23 +84,22 @@ class ExampleControllerSpec extends Specification {
         response.redirectedUrl == "/example/show/$example.id"
     }
 
-    // This test passes in debug mode, not in run mode
-//    void "Test update outdated version number"() {
-//        when:
-//        params["webService"] = Mock(WebService)
-//        params["name"] = 'someValidName'
-//        params["description"] = 'description'
-//        params["version"] = 0
-//        def example = new Example(params)
-//        example.save()
-//
-//        params.id = example.id
-//        params.version = -1
-//        controller.update()
-//
-//        then:
-//        view == "/example/edit"
-//        model.exampleInstance != null
-//    }
+    void "Test update outdated version number"() {
+        when:
+        params["webService"] = Mock(WebService)
+        params["name"] = 'someValidName'
+        params["description"] = 'description'
+        params["version"] = 0
+        def example = new Example(params)
+        example.save(flush: true)
+
+        params.id = example.id
+        params.version = -1
+        controller.update()
+
+        then:
+        view == "/example/edit"
+        model.exampleInstance != null
+    }
 
 }
