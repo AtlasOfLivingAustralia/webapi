@@ -47,7 +47,7 @@ class ExampleRunFailureSpec extends Specification {
         where:
         message             | valid
         null                | false
-        ""                  | true
+//        ""                  | true
         "hullo there this is a reasonably sized message"| true
         largeMessage        | true
         veryLargeMessage    | false
