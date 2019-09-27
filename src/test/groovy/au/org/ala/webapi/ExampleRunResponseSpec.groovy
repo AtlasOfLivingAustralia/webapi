@@ -35,7 +35,7 @@ class ExampleRunResponseSpec extends Specification {
         where:
         contentType | valid
         null        | false
-        ""          | true
+//        ""          | true
         "application/hal+json"| true
     }
 
