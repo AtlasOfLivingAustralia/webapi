@@ -18,9 +18,9 @@
     <f:display bean="example" except="runs"/>
     <g:form resource="${this.example}" method="DELETE">
         <fieldset class="buttons">
-            <g:link class="edit" action="edit" resource="${this.example}"><g:message code="default.button.edit.label"
+            <g:link class="edit btn btn-primary" action="edit" resource="${this.example}"><g:message code="default.button.edit.label"
                                                                                      default="Edit"/></g:link>
-            <input class="delete" type="submit"
+            <input class="delete btn btn-primary" type="submit"
                    value="${message(code: 'default.button.delete.label', default: 'Delete')}"
                    onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
         </fieldset>
