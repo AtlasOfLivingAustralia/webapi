@@ -26,7 +26,7 @@
     <g:form resource="${this.example}" method="PUT">
         <g:hiddenField name="version" value="${this.example?.version}"/>
         <fieldset class="form">
-            <f:all bean="example" except="params,runs,webService"/>
+            <f:all bean="example" except="params,runs"/>
         </fieldset>
 
 
