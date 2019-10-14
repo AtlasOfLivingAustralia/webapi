@@ -22,19 +22,8 @@ class ExampleControllerSpec extends Specification {
         controller.index()
 
         then:
-        response.redirectedUrl == "/example/list"
-    }
-
-    void "Test the list action returns the correct model"() {
-        when:
-        params["name"] = 'someValidName'
-        params["description"] = 'description'
-        def model = controller.list()
-
-        then:
-        !model.exampleInstanceList
-        model.exampleInstanceList.size() == 0
-        model.exampleInstanceTotal == 0
+        !model.exampleList
+        model.exampleCount == 0
     }
 
     void "Test show non-exist Example re-directs to list"() {
@@ -42,7 +31,7 @@ class ExampleControllerSpec extends Specification {
         controller.show()
 
         then:
-        response.redirectedUrl == '/example/list'
+        response.redirectedUrl == '/example/index'
     }
 
     void "Test show existing Example returns the correct Example"() {
@@ -57,7 +46,7 @@ class ExampleControllerSpec extends Specification {
         def model = controller.show()
 
         then:
-        model.exampleInstance == example
+        model.example == example
     }
 
     void "Test update without providing entity"() {
@@ -65,7 +54,7 @@ class ExampleControllerSpec extends Specification {
         controller.update()
 
         then:
-        response.redirectedUrl == "/example/list"
+        response.redirectedUrl == "/example/index"
     }
 
     void "Test update valid values"() {
@@ -99,7 +88,7 @@ class ExampleControllerSpec extends Specification {
 
         then:
         view == "/example/edit"
-        model.exampleInstance != null
+        model.example != null
     }
 
 }
