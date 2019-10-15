@@ -128,7 +128,7 @@
         </tbody>
     </table>
     <span class="pull-right">
-        <a href="javascript:void(0);" class="btn addRowBtn btn-ala"><i class="icon-plus"></i>&nbsp;Add&nbsp;parameter
+        <a href="javascript:void(0);" class="btn addRowBtn btn-ala"><i class="fa fa-plus"></i>&nbsp;Add&nbsp;parameter
         </a>
     </span>
 
