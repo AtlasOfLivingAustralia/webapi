@@ -17,7 +17,7 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <p class="lead">${message(code: "example.list.label", default: "To add an example, you can also select the webservice first, and then use the \"Add example\" button.")}</p>
+    <p class="lead">${message(code: "example.list.label", default: "To add an example, you can also select the webservice first, and then use the \"New Example\" button.")}</p>
 
     <f:table collection="${exampleList}"
              properties="${['name', 'webService', 'description', 'dateCreated', 'lastUpdated']}"/>

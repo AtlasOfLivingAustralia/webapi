@@ -109,6 +109,11 @@
         </h4>
     </g:if>
 
+    <span class="pull-right">
+        <a href="javascript:void(0);" class="btn addRowBtn btn-ala"><i class="fa fa-plus"></i>&nbsp;Add&nbsp;parameter
+        </a>
+    </span>
+
     <table class="table">
         <thead id="paramThead">
         <th>Name</th>
@@ -127,11 +132,6 @@
         </g:if>
         </tbody>
     </table>
-    <span class="pull-right">
-        <a href="javascript:void(0);" class="btn addRowBtn btn-ala"><i class="fa fa-plus"></i>&nbsp;Add&nbsp;parameter
-        </a>
-    </span>
-
 </div>
 
 

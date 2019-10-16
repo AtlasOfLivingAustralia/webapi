@@ -5,7 +5,7 @@
 	<head>
 		<meta name="layout" content="${grailsApplication.config.skin.layout}"/>
 		<g:set var="entityName" value="${message(code: 'webService.label', default: 'WebService')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /> | Web service API | ${grailsApplication.config.skin.orgNameLong}</title></title>
+		<title><g:message code="default.show.label" args="[entityName]" /></title>
         <asset:stylesheet src="webapi"></asset:stylesheet>
         <meta name="breadcrumbs" content="${createLink(uri: '/')},${grailsApplication.config.application.title}"/>
 	</head>
@@ -156,9 +156,9 @@
 			<g:form>
 				<fieldset class="buttons">
                     <g:hiddenField name="id" value="${this.webService?.id}"/>
-                    <g:link class="edit" action="edit" id="${this.webService?.id}"><g:message
+                    <g:link class="edit btn btn-primary" action="edit" id="${this.webService?.id}"><g:message
                             code="default.button.edit.label" default="Edit"/></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+					<g:actionSubmit class="delete btn btn-primary" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                     <g:link class="btn btn-primary" controller="example" action="create"
                             params="${[webService: this.webService.id]}">Create example</g:link>
 				</fieldset>

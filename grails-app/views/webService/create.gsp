@@ -4,7 +4,7 @@
 	<head>
 		<meta name="layout" content="${grailsApplication.config.skin.layout}"/>
 		<g:set var="entityName" value="${message(code: 'webService.label', default: 'WebService')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /> | Web service API | ${grailsApplication.config.skin.orgNameLong}</title>
+		<title><g:message code="default.create.label" args="[entityName]" /></title>
         <asset:stylesheet src="webapi"></asset:stylesheet>
         <meta name="breadcrumbs" content="${createLink(uri: '/')},${grailsApplication.config.application.title}"/>
 	</head>
@@ -26,7 +26,7 @@
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
-                    <g:submitButton name="create" class="save"
+                    <g:submitButton name="create" class="save btn btn-primary"
                                     value="${message(code: 'default.button.create.label', default: 'Create')}"/>
 				</fieldset>
 			</g:form>

@@ -172,7 +172,7 @@ class ExampleController implements GrailsConfigurationAware {
 
         def max = sortedRuns.max {it.duration}
         def min = sortedRuns.min {it.duration}
-        ["example" : example, "sortedRuns" : sortedRuns, "min" : min, "max" : max]
+        ["exampleInstance" : example, "sortedRuns" : sortedRuns, "min" : min, "max" : max]
     }
 
     /** list all machine runnable examples and web services with no examples */
