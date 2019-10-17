@@ -3,18 +3,16 @@ package au.org.ala.webapi
 class WebServiceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-    static defaultAction = "list"
     static scaffold = WebService
 
     def combinedCacheService
 
-    def list(Integer max) {
+    def index(Integer max) {
         params.max = Math.min(max ?: 1000, 1000)
         respond WebService.list(params), model: [webServiceCount: WebService.count()]
     }
 
     def create() {
-
         if(params.id){
             def webService = WebService.findById(params.id)
             def clone = new WebService([

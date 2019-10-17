@@ -234,7 +234,7 @@ class ExampleController implements GrailsConfigurationAware {
     }
 
     def callExample(Long id) {
-        final example = show(id).exampleInstance
+        final example = show(id).example
         if (!example) return
 
         final run = exampleService.callExample(example)
