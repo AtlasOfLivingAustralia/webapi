@@ -26,9 +26,17 @@
     <g:form resource="${this.example}" method="PUT">
         <g:hiddenField name="version" value="${this.example?.version}"/>
         <fieldset class="form">
-            <f:all bean="example" except="params,runs"/>
+            <f:all bean="example" except="params,runs,urlPath,onlineViewer,machineCallable"/>
+            <f:field property="urlPath" label="Machine callable: Is this example intended for consumption by other software?">
+                <g:textField name="${property}" value="${example?.urlPath?:''}"/>
+            </f:field>
+            <f:field property="onlineViewer" label="Link to a online viewer (e.g. API Kitchen, bl.ocks.org)">
+                <g:textField name="${property}" value="${example?.onlineViewer?:''}"/>
+            </f:field>
+            <f:field property="machineCallable" label="URL Path - use this for REST Style URLs that dont use request parameters">
+                <g:checkBox name="${property}" value="${example?.machineCallable}"/>
+            </f:field>
         </fieldset>
-
 
         <table id="tableTemplate" style="display:none">
             <tr class="paramRowTemplate">

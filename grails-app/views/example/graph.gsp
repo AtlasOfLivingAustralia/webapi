@@ -64,16 +64,16 @@
 </ul>
 
 <div id="show-example" class="content scaffold-show" role="main">
-    <h1><g:fieldValue bean="${exampleInstance}"
+    <h1><g:fieldValue bean="${example}"
                       field="name"/>
-    <g:link class="show btn btn-primary pull-right" controller="example" action="show" id="${exampleInstance.id}"><g:message code="default.show.label" args="[entityName]" /></g:link>
+    <g:link class="show btn btn-primary pull-right" controller="example" action="show" id="${example.id}"><g:message code="default.show.label" args="[entityName]" /></g:link>
     </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
 
-    <g:if test="${exampleInstance?.description}">
-        <div class="well"><markdown:renderHtml text="${exampleInstance.description}" /></div>
+    <g:if test="${example?.description}">
+        <div class="well"><markdown:renderHtml text="${example.description}" /></div>
     </g:if>
 
     <g:if test="${sortedRuns}">
