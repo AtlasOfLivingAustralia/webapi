@@ -1,0 +1,1 @@
+ALTER TABLE web_service MODIFY example_output LONGTEXT;
