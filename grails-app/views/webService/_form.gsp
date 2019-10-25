@@ -27,9 +27,9 @@
                 <label for="url">
                     <g:message code="webService.url.label"
                                default="Url (must start with / and exclude the base URL for the webapp)"/>
+                    <span class="required-indicator">*</span>
                 </label>
                 <g:textField name="url" value="${this.webService?.url}" class="input-xxlarge  span12"/>
-                <span class="required-indicator">*</span>
             </div>
 
             <div class="fieldcontain ${hasErrors(bean: this.webService, field: 'description', 'error')} ">
