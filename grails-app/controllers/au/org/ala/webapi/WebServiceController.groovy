@@ -1,5 +1,7 @@
 package au.org.ala.webapi
 
+import org.springframework.dao.DataIntegrityViolationException
+
 class WebServiceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -10,6 +12,26 @@ class WebServiceController {
     def index(Integer max) {
         params.max = Math.min(max ?: 1000, 1000)
         respond WebService.list(params), model: [webServiceCount: WebService.count()]
+    }
+
+    def delete(Long id) {
+        def webServiceInstance = WebService.get(id)
+        if (!webServiceInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'webService.label', default: 'WebService'), id])
+            redirect(action: "index")
+            return
+        }
+
+        try {
+            webServiceInstance.delete(flush: true)
+            combinedCacheService.clearCache()
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'webService.label', default: 'WebService'), id])
+            redirect(action: "index")
+        }
+        catch (DataIntegrityViolationException e) {
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'webService.label', default: 'WebService'), id])
+            redirect(action: "show", id: id)
+        }
     }
 
     def create() {
