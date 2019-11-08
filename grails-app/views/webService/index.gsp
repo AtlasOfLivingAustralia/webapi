@@ -71,7 +71,7 @@
                     <td>
                         <g:link class="btn btn-xs btn-primary" controller="webService" action="edit"
                                 id="${webService.id}">Edit&nbsp;details</g:link>
-                        <g:link class="btn btn-xs btn-primary" controller="example" action="create"
+                        <g:link class="btn btn-xs btn-primary" controller="example" action="createForWS"
                                 params="${[webService: webService.id]}">Add&nbsp;example</g:link>
                         <g:link class="btn btn-xs btn-primary" controller="webService" action="create"
                                 id="${webService.id}">Create&nbsp;copy</g:link>

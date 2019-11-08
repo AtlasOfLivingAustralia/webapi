@@ -11,7 +11,14 @@
 
 <body>
 <div id="create-example" class="content scaffold-create" role="main">
-    <h1><g:message code="default.create.label" args="[entityName]"/></h1>
+    <h1><g:message code="default.create.label" args="[entityName]"/>
+    <g:if test="${this.webService}">
+        <g:message code="default.create.for.service.label" default="for service"/>
+        <g:link controller="webService" action="show" id="${this.webService.id}">
+            ${webService.name}
+        </g:link>
+    </g:if>
+    </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
@@ -24,6 +31,9 @@
         </ul>
     </g:hasErrors>
     <g:form resource="${this.example}" method="POST">
+        <g:if test="${this.webService}">
+            <g:hiddenField name="webService.id" value="${this.example?.webService?.id}"/>
+        </g:if>
         <fieldset class="form">
             <f:all bean="example" except="params,runs"/>
         </fieldset>

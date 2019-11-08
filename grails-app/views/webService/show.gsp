@@ -159,7 +159,7 @@
                     <g:link class="edit btn btn-primary" action="edit" id="${this.webService?.id}"><g:message
                             code="default.button.edit.label" default="Edit"/></g:link>
 					<g:actionSubmit class="delete btn btn-primary" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                    <g:link class="btn btn-primary" controller="example" action="create"
+                    <g:link class="btn btn-primary" controller="example" action="createForWS"
                             params="${[webService: this.webService.id]}">Create example</g:link>
 				</fieldset>
 			</g:form>

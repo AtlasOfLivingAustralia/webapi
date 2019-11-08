@@ -79,7 +79,7 @@
     <g:each in="${services.value}" status="i" var="service">
         <tr>
             <td><g:link controller="webService" action="show" id="${service.id}"><g:fieldValue field="name" bean="${service}" /></g:link></td>
-            <td><g:link class="btn btn-xs btn-ala" controller="example" action="create"
+            <td><g:link class="btn btn-xs btn-ala" controller="example" action="createForWS"
                         params="[webService: service.id]">Add example</g:link></td>
         </tr>
     </g:each>

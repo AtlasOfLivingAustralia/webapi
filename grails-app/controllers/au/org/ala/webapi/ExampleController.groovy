@@ -29,7 +29,7 @@ class ExampleController implements GrailsConfigurationAware {
     }
 
     def createForWS() {
-        def webService = WebService.get(params.id)
+        def webService = WebService.get(params.webService)
         def wsParams = webService.getSortedParams()
         def exampleParams = []
         if(wsParams){
@@ -41,7 +41,26 @@ class ExampleController implements GrailsConfigurationAware {
         example.webService = webService
 
         combinedCacheService.clearCache()
-        render(view:'create', model:[example: example, webService:webService])
+        render(view:'create', model:[example: example, webService: webService])
+    }
+
+    def save() {
+        def exampleInstance = new Example(params)
+        if (!exampleInstance.save(flush: true)) {
+            render(view: "create", model: [example: exampleInstance])
+            return
+        }
+
+        storeParams(exampleInstance, params)
+
+        flash.message = message(code: 'default.created.message', args: [message(code: 'example.label', default: 'Example'), exampleInstance.id])
+
+        combinedCacheService.clearCache()
+        if(params.returnTo){
+            redirect(url: params.returnTo)
+        } else {
+            redirect(action: "show", id: exampleInstance.id)
+        }
     }
 
     def exportAsCsv(Long id) {
