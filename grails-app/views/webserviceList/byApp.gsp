@@ -8,14 +8,14 @@
 
         <asset:stylesheet src="webapi"></asset:stylesheet>
         <asset:javascript src="bootstrap-tooltip"></asset:javascript>
-
+        <asset:javascript src="webServiceToggle"></asset:javascript>
         <g:if test="${!isEditor}">
             <style type="text/css">
             .editorFunctions { display:none; }
             </style>
         </g:if>
 	</head>
-	<body>
+    <body onload="expandOnIndividualService()">
     <div class="editorFunctions">
         <ul class="nav nav-pills pull-right">
                   <li class="dropdown">
@@ -61,22 +61,4 @@
             </cache:block>
 		</div>
 	</body>
-<asset:script>
-$(function() {
-    //add click events for links
-    $( ".webServiceShowDetails" ).click(function() {
-      $( this).parent().parent().parent().children( ".webServiceDetails" ).toggle( "slow", function() {
-        // Animation complete.
-      });
-    });
-    $('.wsLabel').tooltip({});
- });
-function expandApis(){
-    $('.webServiceDetails').attr('style','display:block')
-}
-function collapseApis(){
-    $('.webServiceDetails').attr('style','display:none')
-}
-</asset:script>
-
 </html>
