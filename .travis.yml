@@ -6,6 +6,7 @@ sudo: false
 branches:
   only:
   - master
+  - develop
   - grails3
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
